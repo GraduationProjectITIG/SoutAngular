@@ -11,8 +11,7 @@ export class NotoficationComponent implements OnInit {
   notoficationArr: any[] = [];
   user: any = JSON.parse(localStorage.getItem('userdata')!)
 
-  constructor(private FireService: FireService, private firestore: AngularFirestore
-  ) {
+  constructor(private FireService: FireService, private firestore: AngularFirestore) {
 
   }
 

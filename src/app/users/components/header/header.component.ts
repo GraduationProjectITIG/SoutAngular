@@ -22,9 +22,6 @@ export class HeaderComponent implements OnInit {
   // ngAfterViewInit(): void {
   //   this.searchValue.nativeElement.value = this.searchServ.InputVal,
   //     console.log(this.searchValue?.nativeElement.value);
-
-
-
   // }
 
   ngOnInit(): void {
