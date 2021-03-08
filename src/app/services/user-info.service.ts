@@ -77,10 +77,6 @@ export class UserInfoService {
             favColor: "grey",
             favMode: "light",
             blocked: false,
-            notifications: [],
-            bookmarks: [],
-            followers: [],
-            following: [],
           })
         }
 
@@ -109,15 +105,13 @@ export class UserInfoService {
 
   async forgotPassword(email: string) {
     await this.fireAuth.sendPasswordResetEmail(email).then(res => {
-      alert(res);
+      alert(`we sent an email to your email.`);
     }).catch((err) => { console.log(`${err}`) })
   }
 
 
   async editProfile(user: User) {
-    //TODO: add method to edit profile using User only
     if (this.user.id !== "") {
-      console.log(`first if statement`)
       this.firestore.collection(`Users`).doc(this.user.id).update({
         id: this.user.id,
         firstName: user.firstName,
@@ -159,6 +153,7 @@ export class UserInfoService {
         // following: user.following,
       }).catch(err => { console.log(`${err}`) });
     }
+
   }
 
   ngOnDestroy(): void {
@@ -167,7 +162,6 @@ export class UserInfoService {
     });
 
   }
-
 
 
 }

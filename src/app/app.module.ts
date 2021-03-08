@@ -9,10 +9,16 @@ import { FooterComponent } from './components/footer/footer.component';
 import { AngularFireModule } from '@angular/fire';
 import { UserInfoService } from './services/user-info.service';
 import { ReactiveFormsModule } from '@angular/forms';
+import { UiSwitchModule } from 'ngx-toggle-switch';
 import { NgxLoadingModule } from 'ngx-loading';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
-import { ModalModule } from 'ngx-bootstrap/modal'
-
+import { ModalModule, BsModalRef } from 'ngx-bootstrap/modal';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { AdminComponent } from './components/admin/admin.component';
+// import { MDBBootstrapModule } from 'angular-bootstrap-md';
 declare module "@angular/core" {
   interface ModuleWithProviders<T = any> {
     ngModule: Type<T>;
@@ -20,14 +26,21 @@ declare module "@angular/core" {
   }
 }
 
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
+
 @NgModule({
   declarations: [
     AppComponent,
     NotfoundComponent,
     FooterComponent,
-    LandingComponent
+    LandingComponent,
+    AdminComponent
   ],
   imports: [
+    // MDBBootstrapModule.forRoot(),
+    UiSwitchModule,
     BrowserModule,
     AppRoutingModule,
     AngularFireModule.initializeApp({
@@ -44,8 +57,21 @@ declare module "@angular/core" {
     TooltipModule,
     ModalModule,
     NgxLoadingModule,
+    BrowserAnimationsModule,
+    HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
   ],
-  providers: [UserInfoService],
+  providers: [
+    UserInfoService,
+    HttpClient
+    , BsModalRef
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
