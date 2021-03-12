@@ -6,6 +6,11 @@ import { Post } from 'src/app/models/post.model';
 import { User } from 'src/app/models/user.model';
 import { PostsService } from 'src/app/services/posts.service';
 import { FireService } from 'src/app/services/fire.service';
+import { Subject } from 'rxjs';
+import { DomSanitizer } from '@angular/platform-browser';
+import { FileService } from 'src/app/services/file.service';
+import * as fileSaver from 'file-saver';
+import * as moment from 'moment';
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Subscription } from 'rxjs';
 // <<<<<<< mai
@@ -13,7 +18,6 @@ import { Subscription } from 'rxjs';
 // import { ISettingsData } from '../../viewModels/isettings-data';
 // >>>>>>> master
 import { ModeService } from 'src/app/services/mode.service';
-import { DomSanitizer } from '@angular/platform-browser';
 import * as RecordRTC from 'recordrtc';
 
 @Component({
@@ -34,6 +38,23 @@ export class ProfileComponent implements OnInit {
   LikesList: any[] = [];
   commentsList: any[] = [];
   notificationsNo: number = 0;
+  fileUrl:any;
+  BlobURL:any;
+  isRecording = false;
+  recorder:any;
+  startTime:any;
+  _recorded = new Subject<any>();
+  _recordingFailed = new Subject<string>();
+  _recordingTime = new Subject<string>();
+  interval:any;
+  stream:any;
+  myBlooob:any;
+  fileTo:any;
+
+
+  constructor(private postsService: PostsService, private route: Router, private sanitizer: DomSanitizer,
+    private fileService: FileService, 
+    private firestore: AngularFirestore, private storage: AngularFireStorage, private FireService: FireService) {
 
   following: number = 0;
   followers: number = 0;
@@ -70,11 +91,12 @@ export class ProfileComponent implements OnInit {
   public urls: any[] = []; //audio recorder audios
   private error: any; //audio recorder error
 // <<<<<<< mai
-  constructor(private postsService: PostsService, private route: Router,
-    private firestore: AngularFirestore, private storage: AngularFireStorage, private FireService: FireService
-    , config: NgbModalConfig, private modalService: NgbModal, private modeService: ModeService, private domSanitizer: DomSanitizer, private firestorage: AngularFireStorage,
-  ) {
+//   constructor(private postsService: PostsService, private route: Router,
+//     private firestore: AngularFirestore, private storage: AngularFireStorage, private FireService: FireService
+//     , config: NgbModalConfig, private modalService: NgbModal, private modeService: ModeService, private domSanitizer: DomSanitizer, private firestorage: AngularFireStorage,
+//   ) {
 // =======
+
 
   // settingsData: ISettingsData = { privateAcc: false, favColor: '', favMode: '', oldPassword: '', deactive: false };
 
@@ -118,6 +140,105 @@ export class ProfileComponent implements OnInit {
       this.route.navigate(['/landing'])
   }
 
+// <<<<<<< fatma
+  download(url:any, blob:any): any {
+    this.fileService.downloadFile(url).subscribe((response: any) => { 
+      let blob2:any = new Blob([response], { type: 'audio/webm' });  
+      this.myBlooob = blob2;
+      
+
+      // fileSaver.saveAs(blob2, 'test.mp3')
+    }), (error: any) => console.log('Error downloading the file'), 
+                 () => console.info('File downloaded successfully');
+  }
+  private stopMedia() {
+    if (this.recorder) {
+      this.recorder = null;
+      clearInterval(this.interval);
+      this.startTime = null;
+      if (this.stream) {
+        this.stream.getAudioTracks().forEach((track:any) => {console.log("track",track );track.stop()});
+        
+        
+        this._recorded.forEach(e=>console.log("e", e.title))
+  
+          
+        this.stream = null;
+      }
+    }
+  }
+  
+stopRecording() {
+  this.isRecording = false;
+  if (this.recorder) {
+    this.recorder.stop((blob:any) => {
+      if (this.startTime) {
+        const mp3Name = encodeURIComponent('audio_' + new Date().getTime() + '.mp3');
+        this._recorded.next({ blob: blob, title: mp3Name });
+        this.BlobURL = URL.createObjectURL(blob)
+        this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.BlobURL);
+        var anchor = document.createElement("a");
+        anchor.href = this.BlobURL;
+        console.log("stop",this.BlobURL)
+        this.download(this.BlobURL,blob)
+        this.stopMedia();
+      }
+    }, () => {
+      this.stopMedia();
+      this._recordingFailed.next();
+    });
+  }
+
+}
+
+startRecording() {
+  this.isRecording = true;
+  if (this.recorder) {
+    
+    return;
+  }
+
+  this._recordingTime.next('00:00');
+  navigator.mediaDevices.getUserMedia({ audio: true }).then(s => {
+    this.stream = s;
+    console.log("s",s)
+    this.record();
+  }).catch(error => {
+    this._recordingFailed.next();
+  });
+
+}
+
+record() {
+
+  this.recorder = new RecordRTC.StereoAudioRecorder(this.stream, {
+    type: 'audio',
+    mimeType: 'audio/webm'
+  });
+
+  this.recorder.record();
+  this.startTime = moment();
+  this.interval = setInterval(
+    () => {
+      const currentTime = moment();
+      const diffTime = moment.duration(currentTime.diff(this.startTime));
+      const time = this.toMyString(diffTime.minutes()) + ':' + this.toMyString(diffTime.seconds());
+      this._recordingTime.next(time);
+    },
+    1000
+  );
+}
+private toMyString(value:any) {
+let val = value;
+if (!value) {
+  val = '00';
+}
+if (value < 10) {
+  val = '0' + value;
+}
+return val;
+}
+// =======
 // <<<<<<< mai
 // =======
   // OnDark(){
@@ -129,6 +250,7 @@ export class ProfileComponent implements OnInit {
   //   this.modeService.defaultModeFont(document.querySelectorAll(".nav-item a"),document.querySelectorAll(".darkFont"),document.querySelectorAll("#name"));
 
   // }
+// >>>>>>> master
 // >>>>>>> master
 
   uploadFile(event: any, type: string) {
@@ -183,6 +305,44 @@ export class ProfileComponent implements OnInit {
 
   }
 
+// <<<<<<< fatma
+  async uploadaudio(event: any, type: string) {
+    var filePath: any;
+    const file = event
+    const id = this.firestore.createId()
+    if (type == "image")
+      filePath = '/post/images/' + id;
+    else if (type == "audio")
+      filePath = '/post/audio/' + id;
+    else if (type == "video")
+      filePath = '/post/video/' + id;
+    await this.storage.upload(filePath, file);
+    await this.storage.refFromURL("gs://sout-2d0f6.appspot.com" + filePath).getDownloadURL().toPromise().then((url => {
+      
+      if (type == "image") {
+        this.post.image = url
+      } else if (type == "audio") {
+        this.post.audio = url
+      } else if (type == "video") {
+        this.post.video = url
+      }
+    }));
+    alert('upload done')
+    // });
+  }
+
+  async addPost(desc: string) {
+    this.post.description = desc;
+    this.post.owner.id = this.user.id;
+    this.post.owner.name = this.user.firstName + " " + this.user.secondName,
+      this.post.owner.picURL = this.user.picURL,
+      this.post.id = this.firestore.createId();
+      if(this.myBlooob){
+        console.log("inside")
+        this.fileTo = new File([this.myBlooob],`audio_${this.post.id}`,{ type: 'audio/mpeg' })
+        await this.uploadaudio(this.fileTo,'audio')
+      }
+// =======
 // <<<<<<< mai
 // =======
   // addPost(desc: string) {
@@ -204,6 +364,7 @@ export class ProfileComponent implements OnInit {
     this.post.owner.name = this.user.firstName + " " + this.user.secondName;
     this.post.owner.picURL = this.user.picURL;
     this.post.id = this.firestore.createId();
+// >>>>>>> master
     this.postsService.addPost(this.post).then(() => {
       console.log(this.post)
     });

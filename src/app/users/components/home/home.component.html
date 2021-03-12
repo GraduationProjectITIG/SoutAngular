@@ -8,13 +8,17 @@
                 <div id="writePst">
                     <div class="firstRow">
                         <img [src]="user.picURL">
-                        <input *ngIf="urls.length===0||urlsVideo.length===0" type="text" [(ngModel)]="postDesc" [placeholder]="greating" />
-                        <div class="p-2 ny-3" *ngFor="let url of urls">
-                            <audio controls="" *ngIf="url"> 
-                                <source [src]="sanitize(url)" type="audio/wav">
-                            </audio>
-                        </div>
+                        <input type="text" [(ngModel)]="postDesc" [placeholder]="greating" />
+                        <span *ngIf="post.audio">
+                            <div class="container-audio">
+                                <audio controls loop autoplay>
+                                    <source [src]="post.audio" type="audio/ogg">
+                                    Your browser dose not Support the audio Tag
+                                </audio>
+                            </div>
+                        </span>
                         <div class="container ny-3" *ngFor="let url of urlsVideo">
+                            
                             <video controls="" *ngIf="url"> 
                                 <source [src]="sanitize(url)" type="video/mp4">
                             </video>

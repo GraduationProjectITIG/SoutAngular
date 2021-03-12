@@ -179,6 +179,15 @@
                     <img [src]="picURL" style="width: 6%" [routerLink]="'/users/profile/'+post.owner.id"
                         routerLinkActive="active" style="cursor: pointer;">
 
+                    <input type="text" placeholder={{postMind}} #desc value="" style="cursor:auto;" />
+                    <div id="song" *ngIf='fileUrl'>
+                        <div class="container-audio">
+                            <audio controls loop>
+                                <source [src]="fileUrl" type="audio/ogg">
+                            </audio>
+                        </div>
+
+
                     <input type="text" placeholder={{postMind}} [(ngModel)]="postDesc" style="cursor:auto;" />
 
                     <input *ngIf="urls.length===0||urlsVideo.length===0" type="text" placeholder={{postMind}}
@@ -193,11 +202,22 @@
                         <video controls="" *ngIf="url">
                             <source [src]="sanitize(url)" type="video/mp4">
                         </video>
+
                     </div>
                 </div>
                 <hr>
                 <div class="secondRow">
                     <div class="live">
+
+                        <i class="fas fa-video" id="liveIcon" style="cursor: pointer;"></i>
+                        <!-- <i class="fas fa-microphone-alt" style="cursor: pointer;"></i> -->
+                        <div style="display: inline-block;background-color: transparent;">
+                            <button *ngIf="!isRecording" style="display: inline-block;background-color: transparent;border: none;" (click)="startRecording()"><i [ngStyle]="{'color': user.favColor}" class="fas fa-microphone-alt"></i></button>
+                            <button *ngIf="isRecording" style="display: inline-block;background-color: transparent;border: none;" (click)="stopRecording()"><i [ngStyle]="{'color': red}" class="fas fa-microphone-alt"></i></button>
+                         </div>
+                        <i class="fas fa-paperclip" style="cursor: pointer;"></i>
+                        <button class="btn" id="postButt" (click)="addPost(desc.value);desc.value=''">Post</button>
+
                         <!-- Audio recorder html -->
                         <div style="display: inline-block;background-color: transparent;">
                             <button *ngIf="!isRecording"
@@ -220,14 +240,12 @@
                                 (click)="stopRecordingVideo()"><i class="fas fa-video" id="liveIcon"
                                     style="cursor: pointer;" [ngStyle]="{'color': user.favColor}"></i></button>
                         </div>
-<!-- <<<<<<< mai -->
-<!-- ======= -->
                          <i class="fas fa-video" id="liveIcon" style="cursor: pointer;margin-top: 6px;"
                             [ngStyle]="{'color': user.favColor}"></i>
                         <i class="fas fa-microphone-alt" style="cursor: pointer;margin-top: 6px;margin-left: 23px;"
                             [ngStyle]="{'color': user.favColor}"></i> 
                          <i class="fas fa-paperclip" style="cursor: pointer;" [ngStyle]="{'color': user.favColor}"></i> 
-<!-- >>>>>>> master -->
+
                         <div class="dropdown" style="float:right;">
                             <button class="btn dropdown-toggle" type="button" data-toggle="dropdown"
                                 aria-haspopup="true" aria-expanded="false"><i class="fas fa-paperclip"
@@ -264,6 +282,7 @@
                         </div>
                         <button class="btn" id="postButt" (click)="addPost(postDesc,urls,urlsVideo);postDesc=''"
                             [ngStyle]="{'background-color': user.favColor}">Post</button>
+                 
                     </div>
 
                 </div>
