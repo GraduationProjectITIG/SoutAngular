@@ -13,6 +13,7 @@ import * as Recorder from 'recorder-js';
 import { DomSanitizer } from "@angular/platform-browser";
 import * as moment from 'moment';
 import { AngularFireStorage } from '@angular/fire/storage';
+import { variable } from '@angular/compiler/src/output/output_ast';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -39,7 +40,8 @@ URL = window.URL || window.webkitURL;
  rec:any;
 //Recorder.js object 
  input:any;
-
+  urlsVideo: any[] = [];
+  picURL: any;
 
   styleObject(): Object {
     return { color: this.user.favColor }
@@ -63,11 +65,12 @@ URL = window.URL || window.webkitURL;
     private sanitizer: DomSanitizer,
     private fileService: FileService,
     private fireService: FireService, private postsService: PostsService, private firestore: AngularFirestore, private route: Router, private domSanitizer: DomSanitizer) {
+
     this.user = JSON.parse(localStorage.getItem('userdata')!);
     this.greating = "What's up, " + this.user.firstName + " " + this.user.secondName + "?";
     this.subscribtion.push(this.fireService.getCollection('post').subscribe((res) => {
       this.postList = res;
-      console.log(res);
+      // console.log(res);
       for (let index = 0; index < this.postList.length; index++) {
         this.getComments(this.postList[index].id)
       }
@@ -94,8 +97,8 @@ URL = window.URL || window.webkitURL;
       }
     }))
 
-    console.log(`Likes ${this.LikesList}`)
-    console.log(`Comments ${this.commentsList}`)
+    // console.log(`Likes ${this.LikesList}`)
+    // console.log(`Comments ${this.commentsList}`)
   }
 
 
@@ -106,6 +109,7 @@ URL = window.URL || window.webkitURL;
         id: id,
         date: new Date().toISOString(),
         description: msg,
+        seen: false,
         maker: {
           id: this.user.id,
           name: this.user.firstName + " " + this.user.secondName,
@@ -113,9 +117,13 @@ URL = window.URL || window.webkitURL;
         }
       })
   }
-  async uploadFile(event: any, type: string) {
+  async uploadFile(event: any=null, type: string, mfile:any) {
     var filePath: any;
-    const file = event
+    var file = event
+    if(event != null)
+      file = event.target.files[0];
+    else file=mfile;
+
     const id = this.firestore.createId()
     if (type == "image")
       filePath = '/post/images/' + id;
@@ -139,9 +147,11 @@ URL = window.URL || window.webkitURL;
 
   async addPost(desc: string, audio: any = null, video: any = null, images: any[] = []) {
     this.post.description = desc;
+
     this.post.audio = "gs://sout-2d0f6.appspot.com/post/audio/Ouo7bBHraiMYfEO8asaBCNtKJGo23SfGXINGfvbxI1rGwvEL";
     this.post.image = images;
     this.post.video = video;
+
     this.post.owner.id = this.user.id;
     this.post.owner.name = this.user.firstName + " " + this.user.secondName;
     this.post.owner.picURL = this.user.picURL;
@@ -149,7 +159,7 @@ URL = window.URL || window.webkitURL;
     if(this.myBlooob){
       console.log("inside")
       this.fileTo = new File([this.myBlooob],`audio_${this.post.id}`,{ type: 'audio/mpeg' })
-      await this.uploadFile(this.fileTo,'audio')
+      await this.uploadFile(null,this.fileTo,'audio')
     }
     
     this.postsService.addPost(this.post).then(() => {
@@ -160,18 +170,7 @@ URL = window.URL || window.webkitURL;
 
   bookmarkpost(post: any) {
     this.firestore.collection("Users").doc(this.user.id).collection("bookmarks").add({
-      date: new Date().toISOString(),
-      description: post.description ? post.description : undefined,
-      id: post.id,
-      audio: post.audio ? post.audio : undefined,
-      video: post.video ? post.video : undefined,
-      talent: post.talent ? post.talent : undefined,
-      images: post.images ? post.images : undefined,
-      owner: {
-        id: post.owner.id,
-        name: post.owner.name,
-        picURL: post.owner.picURL
-      }
+      post: this.firestore.doc(`post/${post.id}`).ref
     })
     alert(`post added`)
   }
@@ -205,15 +204,19 @@ URL = window.URL || window.webkitURL;
     this.commentsList = []
     this.subscribtion.push(await this.firestore.collection('post').doc(postid).collection('comment').valueChanges().subscribe((data) => {
       this.commentsList.push(data);
-      console.log(data)
+      // console.log(data)
     }))
+  }
+
+  deletepost(post:any){
+    this.firestore.collection('post').doc(post.id).delete();
   }
 
   async getLikes(postid: string) {
     this.LikesList = []
     this.subscribtion.push(await this.firestore.collection('post').doc(postid).collection('like').valueChanges().subscribe((data) => {
       this.LikesList.push(data)
-      console.log(data)
+      // console.log(data)
     }))
   }
 
@@ -360,11 +363,38 @@ abortRecording() {
     // this.urlsVideo.push(URL.createObjectURL(blob)!);
   }
 
-  
+  sanitize(url: string) {
+    // console.log(url)
+    return this.domSanitizer.bypassSecurityTrustUrl(url);
+  }
 
   errorCallback(error: any) {
     this.error = 'Can not play audio in your browser';
   }
 
-
+  // async uploadFile(event: any, type: string) {
+  //   var filePath: any;
+  //   const file = event.target.files[0];
+  //   const id = this.firestore.createId()
+  //   if (type == "image")
+  //     filePath = '/post/images/' + id;
+  //   else if (type == "audio")
+  //     filePath = '/post/audio/' + id;
+  //   else if (type == "video")
+  //     filePath = '/post/video/' + id;
+  //   await this.firestorage.upload(filePath, file);
+  //   const ref = this.firestorage.refFromURL("gs://sout-2d0f6.appspot.com" + filePath).getDownloadURL().toPromise().then((url => {
+  //     console.log(url);
+  //     if (type == "image") {
+  //       this.post.image = url
+  //     } else if (type == "audio") {
+  //       this.post.audio = url
+  //     } else if (type == "video") {
+  //       this.post.video = url
+  //     }
+  //     console.log(url)
+  //   }));
+  //   alert('upload done')
+  //   // });
+  // }
 }

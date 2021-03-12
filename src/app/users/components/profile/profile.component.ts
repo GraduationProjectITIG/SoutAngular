@@ -308,6 +308,7 @@ return val;
     await this.firestore.collection(`Users`).doc(usrId).collection('notifications').add({
       date: new Date().toISOString(),
       description: msg,
+      seen: false,
       maker: {
         id: this.user.id,
         name: this.user.firstName + " " + this.user.secondName,
