@@ -277,6 +277,5 @@ export class HomeComponent implements OnInit {
       console.log(url)
     }));
     alert('upload done')
-    // });
   }
 }
