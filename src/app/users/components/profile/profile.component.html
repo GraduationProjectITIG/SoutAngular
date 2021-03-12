@@ -133,12 +133,23 @@
                     <img [src]="picURL" style="width: 6%" [routerLink]="'/users/profile/'+post.owner.id"
                         routerLinkActive="active" style="cursor: pointer;">
                     <input type="text" placeholder={{postMind}} #desc value="" style="cursor:auto;" />
+                    <div id="song" *ngIf='fileUrl'>
+                        <div class="container-audio">
+                            <audio controls loop>
+                                <source [src]="fileUrl" type="audio/ogg">
+                            </audio>
+                        </div>
+                    </div>
                 </div>
                 <hr>
                 <div class="secondRow">
                     <div class="live">
                         <i class="fas fa-video" id="liveIcon" style="cursor: pointer;"></i>
-                        <i class="fas fa-microphone-alt" style="cursor: pointer;"></i>
+                        <!-- <i class="fas fa-microphone-alt" style="cursor: pointer;"></i> -->
+                        <div style="display: inline-block;background-color: transparent;">
+                            <button *ngIf="!isRecording" style="display: inline-block;background-color: transparent;border: none;" (click)="startRecording()"><i [ngStyle]="{'color': user.favColor}" class="fas fa-microphone-alt"></i></button>
+                            <button *ngIf="isRecording" style="display: inline-block;background-color: transparent;border: none;" (click)="stopRecording()"><i [ngStyle]="{'color': red}" class="fas fa-microphone-alt"></i></button>
+                         </div>
                         <i class="fas fa-paperclip" style="cursor: pointer;"></i>
                         <button class="btn" id="postButt" (click)="addPost(desc.value);desc.value=''">Post</button>
                     </div>
@@ -175,7 +186,7 @@
                 <img [src]="post.image[0]" *ngIf="post.image[0]" style="width: 100%;">
                 <span *ngIf="post.audio">
                     <div class="container-audio">
-                        <audio controls loop autoplay>
+                        <audio controls loop>
                             <source [src]="post.audio" type="audio/ogg">
                             Your browser dose not Support the audio Tag
                         </audio>

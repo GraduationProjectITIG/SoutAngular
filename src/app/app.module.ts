@@ -14,6 +14,11 @@ import { NgxLoadingModule } from 'ngx-loading';
 import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule, BsModalRef } from 'ngx-bootstrap/modal';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AudioRecordingService } from './services/audio-recording.service';
+import { NgxElectronModule } from 'ngx-electron';
+import {HttpClientModule} from '@angular/common/http';
+
+
 // import { MDBBootstrapModule } from 'angular-bootstrap-md';
 declare module "@angular/core" {
   interface ModuleWithProviders<T = any> {
@@ -31,6 +36,8 @@ declare module "@angular/core" {
   ],
   imports: [
     // MDBBootstrapModule.forRoot(),
+    HttpClientModule,
+    NgxElectronModule,
     UiSwitchModule,
     BrowserModule,
     AppRoutingModule,
@@ -50,7 +57,7 @@ declare module "@angular/core" {
     NgxLoadingModule,
     BrowserAnimationsModule,
   ],
-  providers: [UserInfoService, BsModalRef],
+  providers: [UserInfoService, BsModalRef,AudioRecordingService],
   bootstrap: [AppComponent]
 })
 export class AppModule {
