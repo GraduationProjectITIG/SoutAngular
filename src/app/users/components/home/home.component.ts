@@ -8,7 +8,7 @@ import { PostsService } from 'src/app/services/posts.service';
 import { Observable, Subject, Subscription } from 'rxjs';
 import * as RecordRTC from 'recordrtc';
 // import { VideoRecordingService } from './video-recording.service';
-import { ElectronService } from 'ngx-electron';
+// import { ElectronService } from 'ngx-electron';
 import * as Recorder from 'recorder-js';
 import { DomSanitizer } from "@angular/platform-browser";
 import * as moment from 'moment';
@@ -63,7 +63,7 @@ URL = window.URL || window.webkitURL;
   audioURL:string='';
   constructor(
     private storage: AngularFireStorage,
-    private electronService: ElectronService,
+    // private electronService: ElectronService,
     private sanitizer: DomSanitizer,
     private fileService: FileService,
     private fireService: FireService, private postsService: PostsService, private firestore: AngularFirestore, private route: Router, private domSanitizer: DomSanitizer) {
