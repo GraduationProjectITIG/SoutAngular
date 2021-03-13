@@ -21,7 +21,15 @@ import { ChatComponent } from './components/chat/chat.component';
 import { SettingComponent } from './components/setting/setting.component';
 import { UiSwitchModule } from 'ngx-toggle-switch';
 import { FormsModule } from '@angular/forms';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HttpClient } from '@angular/common/http';
 
+
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
 @NgModule({
   declarations: [
     UsersComponent,
@@ -56,6 +64,13 @@ import { FormsModule } from '@angular/forms';
     AngularFirestoreModule,
     FormsModule,
     AngularFireStorageModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient]
+      }
+    }),
 
   ]
 })
