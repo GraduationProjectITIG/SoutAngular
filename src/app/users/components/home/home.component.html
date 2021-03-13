@@ -17,7 +17,11 @@
                                 </audio>
                             </div>
                         </span> -->
-
+<!-- Audio recorder html -->
+                            <div class="mx-1 text-center" style="display: inline-block;background-color: transparent;">
+                            <button *ngIf="!isRecording" style="display: inline-block;background-color: transparent;border: none;" (click)="startRecording()"><i [ngStyle]="{'color': user.favColor}" class="fas fa-microphone-alt"></i></button>
+                            <button *ngIf="isRecording" style="display: inline-block;background-color: transparent;border: none;" (click)="stopRecording()"><i Style="color: red" class="fas fa-microphone-alt"></i></button>
+                         </div>
                         <div id="song" *ngIf='fileUrl'>
                         <div class="container-audio">
                             <audio controls loop>
@@ -67,11 +71,7 @@
                         </li>
                     </ul>
                 </div>
-                            <!-- Audio recorder html -->
-                            <div style="display: inline-block;background-color: transparent;">
-                            <button *ngIf="!isRecording" style="display: inline-block;background-color: transparent;border: none;" (click)="startRecording()"><i [ngStyle]="{'color': user.favColor}" class="fas fa-microphone-alt"></i></button>
-                            <button *ngIf="isRecording" style="display: inline-block;background-color: transparent;border: none;" (click)="stopRecording()"><i [ngStyle]="{'color': red}" class="fas fa-microphone-alt"></i></button>
-                         </div>
+                            
                             <!-- startVideoRecording
                             <div style="display: inline-block;background-color: transparent;">
                                <button *ngIf="!isRecordingVideo" style="display: inline-block;background-color: transparent;border: none;" (click)="startVideoRecording()"><i [ngStyle]="{'color': user.favColor}" class="fas fa-video" ></i></button>
