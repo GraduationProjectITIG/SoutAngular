@@ -6,14 +6,14 @@
         </div>
         <div class="col-9">
             <div class="col-10 col-md-9">
-                <h1 class="ml-3 mb-4">Discover</h1>
+                <h1 class="ml-3 mb-4">{{'discover.Discover'|translate}}</h1>
 
                 <ul class="nav  ml-3 nav2 nav-tabs" id="nav-tab" role="tablist"
                     style="background-color: #F5F7F8;border-bottom: 2px solid;border-bottom-color:#d8352b;border-radius: 8px;box-shadow: 0px 0.5px 5px grey; width: 100%;margin-bottom: 2%;height: 5%;font-size: 17px;">
 
                     <li class="nav-item col padding-0" (click)="getAllPosts();">
                         <a class="nav-link active" data-toggle="tab" aria-selected="true" role="tab"
-                            style="border-radius: 4px ;color: #d8352b;width: 100%;">All</a>
+                            style="border-radius: 4px ;color: #d8352b;width: 100%;">{{'discover.All'|translate}}</a>
                     </li>
 
                     <li class="nav-item col padding-0" *ngFor="let talent of talentList"
@@ -40,19 +40,20 @@
                                 <a style="color: black">
                                     <i class="far fa-bookmark"
                                         style="font-size: 16px;color: #d8352b;margin-right: 5px;"></i>
-                                    Bookmark</a>
+                                        {{'discover.Bookmark'|translate}} </a>
                             </li>
                             <hr>
                             <li role="presentation" style="padding-left:7px;cursor: pointer;">
                                 <a role="menuitem" tabindex="-1" (click)="open(content)" style="color: black">
                                     <i class="fas fa-exclamation-triangle"
                                         style="font-size: 15px;color: #d8352b;margin-right: 5px;"></i>
-                                    Report Post</a>
+                                        {{'discover.Report_Post'|translate}}
+                                    </a>
 
                                 <!-- Modal -->
                                 <ng-template #content let-c="close" let-d="dismiss">
                                     <div class="modal-header">
-                                        <h4 class="modal-title" id="modal-basic-title">Report Post !
+                                        <h4 class="modal-title" id="modal-basic-title">{{'discover.Report_Post_!'|translate}}
                                         </h4>
                                         <button type="button" class="close" aria-label="Close"
                                             (click)="d('Cross click')">
@@ -60,9 +61,9 @@
                                         </button>
                                     </div>
                                     <div class="modal-body">
-                                        <input type="text" class="form-control" #title placeholder="Title">
+                                        <input type="text" class="form-control" #title placeholder="'discover.Title'|translate">
                                         <br />
-                                        <input type="text" class="form-control" #desc placeholder="Description">
+                                        <input type="text" class="form-control" #desc placeholder="'discover.Description'|translate">
                                         <br />
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input" id="inputGroupFile01"
@@ -76,7 +77,7 @@
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-outline-dark"
-                                            (click)="c('Save click');reportPost(title.value,desc.value,post.id)">Report</button>
+                                            (click)="c('Save click');reportPost(title.value,desc.value,post.id)">{{'discover.Report'|translate}}</button>
                                     </div>
                                 </ng-template>
                                 <!-- End Modal -->
@@ -85,14 +86,14 @@
                             <li role="presentation" style="padding-left:7px;cursor: pointer;">
                                 <a style="color: black">
                                     <i class="fas fa-ban" style="font-size: 15px;color: #d8352b;margin-right: 5px;"></i>
-                                    Block</a>
+                                    {{'discover.Block'|translate}}</a>
                             </li>
                             <hr>
                             <li role="presentation" style="padding-left:7px;cursor: pointer;">
                                 <a style="color: black">
                                     <i class="fas fa-volume-mute"
                                         style="font-size: 16px;color: #d8352b;margin-right: 5px;"></i>
-                                    Mute</a>
+                                        {{'discover.Mute'|translate}}</a>
                             </li>
                         </ul>
                     </div>
@@ -113,7 +114,7 @@
                         <div class="container-audio">
                             <audio controls loop autoplay>
                                 <source [src]="post.audio" type="audio/ogg">
-                                Your browser dose not Support the audio Tag
+                                    {{'discover.audio_tag_msg'|translate}}
                             </audio>
                         </div>
                     </span>
@@ -125,13 +126,14 @@
 
                             <i class="far fa-thumbs-up" id="likeIcon"></i>
                             <span id="likeCont">
-                                Like <span class="badge badge-pill badge-light">{{LikesList[i].length}}</span>
+                                {{'discover.Like'|translate}} <span class="badge badge-pill badge-light">{{LikesList[i].length}}</span>
                             </span>
                         </div>
                         <div id="comment">
                             <i class="fas fa-microphone-alt"></i>
                             <span id="commentCont">
-                                Voice
+                                {{'discover.Voice'|translate}}
+                                
                             </span>
                         </div>
 
@@ -139,7 +141,8 @@
 
                             <i class="far fa-comment-alt" id="commentIcon"></i>
                             <span id="commentCont">
-                                Comment <span class="badge badge-pill badge-light">{{commentsList[i].length}}</span>
+                                {{'discover.Comment'|translate}}
+                                 <span class="badge badge-pill badge-light">{{commentsList[i].length}}</span>
                             </span>
                         </div>
                     </div>
@@ -150,7 +153,7 @@
                         <div class="firstRow">
                             <img [src]="picURL" [routerLink]="'/users/profile'" routerLinkActive="active"
                                 style="cursor: pointer;">
-                            <input [(ngModel)]="postcomfields[i]" type="text" placeholder="Write a comment..."
+                            <input [(ngModel)]="postcomfields[i]" type="text" placeholder="'discover.Write_a_comment'|translate"
                                 id="cmntInput" />
                         </div>
 

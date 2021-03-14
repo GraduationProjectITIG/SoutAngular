@@ -6,6 +6,8 @@ import { Post } from 'src/app/models/post.model';
 import { User } from 'src/app/models/user.model';
 import { PostsService } from 'src/app/services/posts.service';
 import { FireService } from 'src/app/services/fire.service';
+import { LocalizationService } from 'src/app/services/localization.service';
+
 
 @Component({
   selector: 'app-profile',
@@ -27,7 +29,7 @@ export class ProfileComponent implements OnInit {
   notificationsNo: number = 0;
 
   constructor(private postsService: PostsService, private route: Router,
-    private firestore: AngularFirestore, private storage: AngularFireStorage, private FireService: FireService) {
+    private firestore: AngularFirestore, private storage: AngularFireStorage, private FireService: FireService, private locale: LocalizationService) {
 
   }
 

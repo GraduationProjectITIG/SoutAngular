@@ -3,9 +3,9 @@
 </nav>
 
 <div class="alert alert-danger text-center" role="alert">
-    <h1>Error 404 Page Not found</h1>
-    <small>please make sure you entered a correct URL.</small>
+    <h1>{{'notfound.error_msg'|translate}}</h1>
+    <small>{{'notfound.please_enter_a_URL'|translate}}</small>
     <br>
-    <a name="backtohomebtn" id="backtohomebtn" class="btn btn-link my-1" [routerLink]="[ '/landing' ]" role="button">Back to home</a>
+    <a name="backtohomebtn" id="backtohomebtn" class="btn btn-link my-1" [routerLink]="[ '/landing' ]" role="button">{{'notfound.Back_to_home'|translate}}</a>
 </div>
 
