@@ -23,7 +23,7 @@
                     style="box-shadow: 0px 0.5px 5px grey;border-radius: 5px;width: 21%;float: right">
                     <button class="btn btn-default dropdown-toggle" type="button" id="menu1" data-toggle="dropdown"
                         style="width: 100%"><i class="fas fa-edit" style="color: #D93746;font-size: 20px"></i> <span
-                            style="margin-right: 2%">Edit</span>
+                            style="margin-right: 2%">{{'profile.Edit'|translate}}</span>
                     </button>
                     <ul class="dropdown-menu" style="width: 100%;border: none" role="menu" aria-labelledby="menu1">
                         <li role="presentation" style="padding-left:7px;">
@@ -31,7 +31,8 @@
                                 <input type="file" (change)="uploadFile($event,'profile')" class="custom-file-input"
                                     style="width:100%;" />
                                 <label class="custom-file-label" for="validatedCustomFile">
-                                    <i class="fas fa-camera" style="font-size: 15px"></i> Edit Profile Pic</label>
+                                    <i class="fas fa-camera" style="font-size: 15px"></i> 
+                                    {{'profile.Edit_Profile_Pic'|translate}}</label>
                             </a>
                         </li>
                         <hr>
@@ -40,7 +41,7 @@
                                 <input type="file" (change)="uploadFile($event,'cover')" class="custom-file-input"
                                     style="width:100%;" />
                                 <label class="custom-file-label" for="validatedCustomFile">
-                                    <i class="fas fa-image" style="font-size: 15px"></i> Edit Cover</label>
+                                    <i class="fas fa-image" style="font-size: 15px"></i>{{'profile.Edit_Cover'|translate}} </label>
                             </a>    
                         </li>
                     </ul>
@@ -58,7 +59,7 @@
                     <div>
                         <li class="nav-item">
                             <a class="nav-link side" [routerLink]="[ '/users/home' ]" routerLinkActive="active">
-                                <i class="fas fa-home"></i><span class="d-none d-md-inline-block"> Home</span>
+                                <i class="fas fa-home"></i><span class="d-none d-md-inline-block">{{'profile.Home'|translate}} </span>
                             </a>
                         </li>
                         <hr>
@@ -67,7 +68,7 @@
                         <li class="nav-item">
                             <a class="nav-link side" [routerLink]="[ '/users/notifications' ]"
                                 routerLinkActive="active">
-                                <i class="fas fa-bell"></i><span class="d-none d-md-inline-block">Notifications <b class="badge badge-pill">{{notificationsNo}}</b>
+                                <i class="fas fa-bell"></i><span class="d-none d-md-inline-block"> {{'profile.Notifications'|translate}} <b class="badge badge-pill">{{notificationsNo}}</b>
                                 </span>
                             </a>
                         </li>
@@ -76,7 +77,7 @@
                     <div>
                         <li class="nav-item">
                             <a class="nav-link side" [routerLink]="[ '/users/messages' ]" routerLinkActive="active">
-                                <i class="fas fa-envelope"></i><span class="d-none d-md-inline-block"> Messages</span>
+                                <i class="fas fa-envelope"></i><span class="d-none d-md-inline-block">{{'profile.Messages'|translate}} </span>
                             </a>
                         </li>
                         <hr>
@@ -85,7 +86,7 @@
                     <div>
                         <li class="nav-item">
                             <a class="nav-link side" [routerLink]="[ '/users/talents' ]" routerLinkActive="active">
-                                <i class="fas fa-music"></i><span class="d-none d-md-inline-block"> Talents</span>
+                                <i class="fas fa-music"></i><span class="d-none d-md-inline-block">{{'profile.Talents'|translate}} </span>
                             </a>
                         </li>
                         <hr>
@@ -93,7 +94,7 @@
                     <div>
                         <li class="nav-item">
                             <a class="nav-link side" [routerLink]="[ '/users/discover' ]" routerLinkActive="active">
-                                <i class="fas fa-hashtag"></i><span class="d-none d-md-inline-block"> Discover</span>
+                                <i class="fas fa-hashtag"></i><span class="d-none d-md-inline-block">{{'profile.Discover'|translate}} </span>
                             </a>
                         </li>
                         <hr>
@@ -101,7 +102,7 @@
                     <div>
                         <li class="nav-item">
                             <a class="nav-link side" [routerLink]="[ '/users/settings' ]" routerLinkActive="active">
-                                <i class="fas fa-cog"></i><span class="d-none d-md-inline-block"> Settings</span>
+                                <i class="fas fa-cog"></i><span class="d-none d-md-inline-block">{{'profile.Settings'|translate}} </span>
 
                             </a>
                         </li>
@@ -110,7 +111,7 @@
                     <div>
                         <li class="nav-item">
                             <a class="nav-link side" [routerLink]="[ '/users/interests' ]" routerLinkActive="active">
-                                <i class="fas fa-bahai"></i><span class="d-none d-md-inline-block"> Interests</span>
+                                <i class="fas fa-bahai"></i><span class="d-none d-md-inline-block">{{'profile.Interests'|translate}} </span>
                             </a>
                         </li>
                         <hr>
@@ -118,7 +119,7 @@
                     <div>
                         <li class="nav-item">
                             <a class="nav-link side" [routerLink]="[ '/users/bookmarks' ]" routerLinkActive="active">
-                                <i class="fas fa-bookmark"></i><span class="d-none d-md-inline-block"> Bookmarks</span>
+                                <i class="fas fa-bookmark"></i><span class="d-none d-md-inline-block">{{'profile.Bookmarks'|translate}} </span>
                             </a>
                         </li>
                     </div>
@@ -140,7 +141,7 @@
                         <i class="fas fa-video" id="liveIcon" style="cursor: pointer;"></i>
                         <i class="fas fa-microphone-alt" style="cursor: pointer;"></i>
                         <i class="fas fa-paperclip" style="cursor: pointer;"></i>
-                        <button class="btn" id="postButt" (click)="addPost(desc.value);desc.value=''">Post</button>
+                        <button class="btn" id="postButt" (click)="addPost(desc.value);desc.value=''">{{'profile.Post'|translate}}</button>
                     </div>
 
                 </div>
@@ -157,7 +158,7 @@
                             <button (click)="deletePost(post.id)"
                                 style="color: black;background-color: transparent;border: none;cursor: pointer;">
                                 <i class="fas fa-trash" style="font-size: 16px;color: #d8352b;margin-right: 5px;"></i>
-                                Delete Post</button>
+                                {{'profile.Delete_Post'|translate}}</button>
                         </li>
                     </ul>
                 </div>
@@ -177,8 +178,7 @@
                     <div class="container-audio">
                         <audio controls loop autoplay>
                             <source [src]="post.audio" type="audio/ogg">
-                            Your browser dose not Support the audio Tag
-                        </audio>
+                                {{'profile.audio_tag_msg'|translate}}                        </audio>
                     </div>
                 </span>
 
@@ -187,19 +187,19 @@
                     <div id="like" (click)="addLike(post)">
                         <i class="far fa-thumbs-up" id="likeIcon"></i>
                         <span id="likeCont">
-                            Like <span class="badge badge-pill badge-light">{{LikesList[i].length}}</span>
+                            {{'profile.Like'|translate}}  <span class="badge badge-pill badge-light">{{LikesList[i].length}}</span>
                         </span>
                     </div>
                     <div id="comment">
                         <i class="fas fa-microphone-alt"></i>
                         <span id="commentCont">
-                            Voice
+                            {{'profile.Voice'|translate}}
                         </span>
                     </div>
                     <div id="comment" (click)="addComment(post,i)">
                         <i class="far fa-comment-alt" id="commentIcon"></i>
                         <span id="commentCont">
-                            Comment <span class="badge badge-pill badge-light">{{commentsList[i].length}}</span>
+                            {{'profile.Comment'|translate}} <span class="badge badge-pill badge-light">{{commentsList[i].length}}</span>
                         </span>
                     </div>
                 </div>
@@ -210,7 +210,7 @@
                     <div class="firstRow">
                         <img [src]="picURL" [routerLink]="'/users/profile/'+post.owner.id" routerLinkActive="active"
                             style="cursor: pointer;">
-                        <input [(ngModel)]="postcomfields[i]" type="text" placeholder="Write a comment..."
+                        <input [(ngModel)]="postcomfields[i]" type="text" placeholder="'profile.Write_a_comment'|translate"
                             id="cmntInput" />
                     </div>
 

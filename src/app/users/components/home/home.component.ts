@@ -8,6 +8,8 @@ import { Subscription } from 'rxjs';
 import * as RecordRTC from 'recordrtc';
 import { DomSanitizer } from "@angular/platform-browser";
 import { AngularFireStorage } from '@angular/fire/storage';
+import { LocalizationService } from 'src/app/services/localization.service';
+
 // import { Console } from 'console';
 @Component({
   selector: 'app-home',
@@ -36,7 +38,7 @@ export class HomeComponent implements OnInit {
   user: any;
   postcomfields: string[] = [];
   greating: string;
-  constructor(private fireService: FireService, private postsService: PostsService, private firestorage: AngularFireStorage, private firestore: AngularFirestore, private route: Router, private domSanitizer: DomSanitizer) {
+  constructor(private fireService: FireService, private postsService: PostsService, private firestorage: AngularFireStorage, private firestore: AngularFirestore, private route: Router, private domSanitizer: DomSanitizer, private locale: LocalizationService) {
     this.user = JSON.parse(localStorage.getItem('userdata')!);
     this.greating = "What's up, " + this.user.firstName + " " + this.user.secondName + "?";
     this.subscribtion.push(this.fireService.getCollection('post').subscribe((res) => {
@@ -140,7 +142,7 @@ export class HomeComponent implements OnInit {
     }))
   }
 
-  deletepost(post:any){
+  deletepost(post: any) {
     this.firestore.collection('post').doc(post.id).delete();
   }
 

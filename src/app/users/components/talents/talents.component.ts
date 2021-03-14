@@ -8,6 +8,8 @@ import { Post } from 'src/app/models/post.model';
 import { FireService } from 'src/app/services/fire.service';
 import { PostsService } from 'src/app/services/posts.service';
 import { UserInfoService } from 'src/app/services/user-info.service';
+import { LocalizationService } from 'src/app/services/localization.service';
+
 
 @Component({
   selector: 'app-talents',
@@ -37,7 +39,7 @@ export class TalentsComponent implements OnInit {
   postcomfields: string[] = [];
   greating: string;
   selectedTalent: string = "";
-  constructor(private fireService: FireService, private domSanitizer: DomSanitizer, private usrInfo: UserInfoService, private firestore: AngularFirestore, private postsService: PostsService, private route: Router) {
+  constructor(private fireService: FireService, private domSanitizer: DomSanitizer, private usrInfo: UserInfoService, private firestore: AngularFirestore, private postsService: PostsService, private route: Router, private locale: LocalizationService) {
     this.user = JSON.parse(localStorage.getItem('userdata')!);
     this.greating = "What's up, " + this.user.firstName! + " " + this.user.secondName! + "?";
     this.loadTalents()

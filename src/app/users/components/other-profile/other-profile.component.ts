@@ -11,6 +11,8 @@ import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Report } from 'src/app/models/report.model';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { finalize } from 'rxjs/operators';
+import { LocalizationService } from 'src/app/services/localization.service';
+
 
 @Component({
   selector: 'app-other-profile',
@@ -43,7 +45,7 @@ export class OtherProfileComponent implements OnInit {
 
   constructor(private postsService: PostsService, private activatedRoute: ActivatedRoute,
     private router: Router, private FireService: FireService, config: NgbModalConfig, private modalService: NgbModal
-    , private firestore: AngularFirestore, private storage: AngularFireStorage) {
+    , private firestore: AngularFirestore, private storage: AngularFireStorage, private locale: LocalizationService) {
 
     config.backdrop = 'static';
     config.keyboard = false;

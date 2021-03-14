@@ -12,6 +12,8 @@ import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Report } from 'src/app/models/report.model';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
+import { LocalizationService } from 'src/app/services/localization.service';
+
 
 @Component({
   selector: 'app-discover',
@@ -40,7 +42,7 @@ export class DiscoverComponent implements OnInit {
   uploaded: string = "";
   imageReStatus: string = "Choose Image";
 
-  constructor(private talentService: TalentService, private route: Router, private postsService: PostsService
+  constructor(private talentService: TalentService, private route: Router, private postsService: PostsService, private locale: LocalizationService
     , private FireService: FireService
     , config: NgbModalConfig, private modalService: NgbModal
     , private firestore: AngularFirestore, private storage: AngularFireStorage) {
@@ -72,8 +74,8 @@ export class DiscoverComponent implements OnInit {
 
   getPostsByTalent(id: string) {
     this.postList = []
-    this.LikesList= []
-    this.commentsList=[]
+    this.LikesList = []
+    this.commentsList = []
     this.postsService.getPostsOfTalent(id).subscribe(res => {
       this.postList = res
 
@@ -94,8 +96,8 @@ export class DiscoverComponent implements OnInit {
 
   getAllPosts() {
     this.postList = []
-    this.LikesList= []
-    this.commentsList=[]
+    this.LikesList = []
+    this.commentsList = []
     this.FireService.getCollection("post/").subscribe(res => {
       this.postList = res
 
@@ -193,9 +195,9 @@ export class DiscoverComponent implements OnInit {
       element.unsubscribe();
     })
   }
-  
+
   //************** For Report ********************
-  
+
   uploadReportImage(event: any) {
     var filePath: any;
     const file = event.target.files[0];

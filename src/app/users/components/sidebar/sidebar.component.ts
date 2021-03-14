@@ -9,6 +9,8 @@ import { FireService } from 'src/app/services/fire.service';
 
 import { UserInfoService } from 'src/app/services/user-info.service';
 import { ISettingsData } from '../../viewModels/isettings-data';
+import { LocalizationService } from 'src/app/services/localization.service';
+
 
 
 @Component({
@@ -24,24 +26,24 @@ export class SidebarComponent implements OnInit {
   subscribtion: Subscription[] = [];
 
   usertalents: any[] = []
-    settingsData: ISettingsData={privateAcc:false,favColor:'',favMode:'',oldPassword:'',deactive:false};
-  constructor(private modeService: ModeService, private usrInfo: FireService, private route: Router, private firestore: AngularFirestore) {
+  settingsData: ISettingsData = { privateAcc: false, favColor: '', favMode: '', oldPassword: '', deactive: false };
+  constructor(private modeService: ModeService, private usrInfo: FireService, private route: Router, private firestore: AngularFirestore, private locale: LocalizationService) {
     this.user = JSON.parse(localStorage.getItem('userdata')!);
     this.loadTalents()
     this.loadUserTalents()
-    console.log("user",this.user)
-    if(this.user.favMode === "dark") this.modeService.OnDark();
+    console.log("user", this.user)
+    if (this.user.favMode === "dark") this.modeService.OnDark();
     else this.modeService.defaultMode();
   }
 
-  OnDark() {
-    this.modeService.OnDarkFont(document.querySelectorAll(".nav-item a"), document.querySelectorAll(".darkfont"));
-    this.modeService.OnDarkColumn(document.querySelectorAll("#sidebarMenu"));
-  }
-  defaultMode() {
-    this.modeService.defaultModeColumn(document.querySelectorAll("#sidebarMenu"));
-    this.modeService.defaultModeFont(document.querySelectorAll(".nav-item a"), document.querySelectorAll(".darkfont"));
-  }
+  // OnDark() {
+  //   this.modeService.OnDarkFont(document.querySelectorAll(".nav-item a"), document.querySelectorAll(".darkfont"));
+  //   this.modeService.OnDarkColumn(document.querySelectorAll("#sidebarMenu"));
+  // }
+  // defaultMode() {
+  //   this.modeService.defaultModeColumn(document.querySelectorAll("#sidebarMenu"));
+  //   this.modeService.defaultModeFont(document.querySelectorAll(".nav-item a"), document.querySelectorAll(".darkfont"));
+  // }
 
   loadTalents() {
     this.subscribtion.push(this.usrInfo.getCollection('talents').subscribe(data => {

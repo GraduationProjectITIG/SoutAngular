@@ -21,11 +21,170 @@
     "email_reset_msg":"ادخل البريد الالكتروني الخاص بك ليتم تغيير كلمة المرور",
     "reset":"اعادة تعيين"
   },
-  "Home": {
+  "home": {
+    "greating":"تحيات",
+    "Post":"نشر",
+    "Bookmark_post":"  احفظ المنشور",
+    "Delete_post":" حذف المنشور",
+    "audio_tag_msg":"محرك البحث خاصتك لا يدعم هذا النوع من الميديا",
+    "Like":"اعجاب",
+    "Voice":"تسجيل",
+    "Comment":"تعليق",
+    "Write_a_comment":"اكتب تعليق..."
+  },
+  "talents": {
+    "greating":"تحيات",
+    "Post":"نشر",
+    "Bookmark_this_post":"احفظ هذا المنشور",
+    "audio_tag_msg":"محرك البحث خاصتك لا يدعم هذا النوع من الميديا",
+    "Like":"اعجاب",
+    "Voice":"تسجيل",
+    "Comment":"نشر",
+    "Write_a_comment":"اكتب تعليق..."
+  },
+  "notfound":{
+
+    "error_msg":"خطا 404 لم يتم العثور علي الصفحه",
+    "please_enter_a_URL":" من فضلك تاكد من ادخال مسار صحيح",
+    "Back_to_home":"عوده الي الرئيسيه"
+  },
+  "bookmark":{
+    "Later":"لاحقا",
+    "Saved_from":"تم الحفظ من",
+    "Previous":"السابق",
+    "Next":"اللاحق",
+    "Like":"اعجاب",
+    "Voice":"تسجيل",
+    "Comment":"نشر",
+    "Write_a_comment":"اكتب تعليق..."
+  },
+  "chat":{
+    "Search":"بحث...",
+    "Chat_with":"محادثه مع",
+    "Messages":"رسائل",
+    "View_profile":" اظهر الصفحه الشخصيه",
+    "Block":"حظر",
+    "Type_your_message":"اكتب رسالتك..."
+  },
+  "discover":{
+    "Discover":"اكتشف",
+    "All":"الكل",
+    "Bookmark":"احفظ",
+    "Report_Post":"احظر هذا المنشور",
+    "Report_Post_!":" احظر هذا المنشور!",
+    "Title":"عنوان",
+    "Description":"المحتوي",
+    "Report":"ارسل تقريرا",
+    "Block":"حظر",
+    "Mute":"صامت",
+    "audio_tag_msg":"محرك البحث خاصتك لا يدعم هذا النوع من الميديا",
+    "Like":"اعجاب",
+    "Voice":"تسجيل",
+    "Comment":"تعليق",
+    "Write_a_comment":"اكتب تعليق..."
+  },
+  "header":{
+    "Search":"بحث"
+  },
+  "notofication":{
+    "Notifications":"الاشعارات:"
+  },
+  "other-profile":{
+    "Follow":"متابعه",
+    "Send_Message":"ارسل رساله",
+    "Report_Profile":"احظر منشور",
+    "Report":"ارسل تقريرا",
+    "Title":"العنوان",
+    "Description":"المحتوي",
+    "Block":"حظر",
+    "Home":"الرئيسيه",
+    "Notifications":"الاشعارات",
+    "Messages":"الرسائل",
+    "Talents":"مواهب",
+    "Discover":"اكتشف",
+    "Settings":"الاعدادات",
+    "Interests":"الاهتمامات",
+    "Bookmarks":"احفظ",
+    "Post":"نشر",
+    "audio_tag_msg":"محرك البحث خاصتك لا يدعم هذا النوع من الميديا",
+    "Like":"اعجاب",
+    "Voice":"تسجيل",
+    "Comment":"تعليق",
+    "Write_a_comment":"اكتب تعليق..."
+  },
+
+  "profile":{
+    "Edit":"تعديل",
+    " Edit_Profile_Pic":"تعديل الصوره الشخصيه",
+    "Edit_Cover":"تعديل الغلاف",
+    "Home":"الرئيسيه",
+    "Notifications":"الاشعارات",
+    "Messages":"الرسائل",
+    "Talents":"مواهب",
+    "Discover":"اكتشف",
+    "Settings":"الاعدادات",
+    "Interests":"الاهتمامات",
+    "Bookmarks":"احفظ",
+    "Post":"نشر",
+    "Delete_Post":"حذف المنشور",
+    "audio_tag_msg":"محرك البحث خاصتك لا يدعم هذا النوع من الميديا",
+    "Like":"Like",
+    "Voice":"تسجيل",
+    "Comment":"تعليق",
+    "Write_a_comment":"اكتب تعليق..."
+  },
+
+  "reports":{
 
   },
-  "Talents": {
+
+  "search":{
+
+  },
+
+  "setting":{
+    "Settings":"الاعدادات",
+    "Account_Privacy":"خصوصيه الحساب",
+    "Theme":"الخاصيه",
+    "Change_Password":"تغيير كلمه السر",
+    "Notifications":"الاشعارات",
+    "Manage_Account":"اداره الحساب",
+    "Themes":"الخاصيات",
+    "Icons_Color":"لون الايكونه",
+    "Reset":"اعاده ظبط",
+    "Enable_Dark_Mode ":"وضع خاصيه الليل",
+    "Save":"حفظ",
+    "Password":"كلمه السر",
+    "Old_Password":"كلمه السر القديمه",
+    "Email_Security":"امان البريد الالكتروني",
+    "Send_Code":"قم ببعث الكود",
+    "Deactivation":"تعطيل",
+    "Deactivate_your_account":"قم بتعطيل الحساب الخاص بك",
+    "Wornning!":"تحذير!",
+    "deactivation_msg":"بعد 30 يوم من التعطيل  حسابك سوف يتم حذفه.",
+    "Confirm":"تحذير",
+    "Privacy":"الخصوصيه",
+    "Public":"عام",
+    "Anyone_can_see_your_posts.":"اي شخص يستطيع رؤيه المنشوارات الخاصه بك",
+    "Security_msg":"للامان تفقد بريدك الالكتروني"
+
+
+
+  },
+
+  "sidebar":{
+    "notifications":"الاشعارات",
+    "messages":"الرسائل",
+    "talents":"مواهب",
+    "discover":"اكتشف",
+    "settings":"الاعدادات",
+    "bookmarks":"احفظ",
+    "your_Interests":"الاهتمامات",
+    "click_to_remove":"اضغط للازاله",
+    "add_Interests":"اضف للاهتمامات",
+    "click_to_add":"اضغط للاضافه"
 
   }
+  
 
 }
