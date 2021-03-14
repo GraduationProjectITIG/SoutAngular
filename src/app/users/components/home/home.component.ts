@@ -1,16 +1,22 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, SecurityContext } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { Router } from '@angular/router';
 import { Post } from 'src/app/models/post.model';
 import { FireService } from 'src/app/services/fire.service';
+import { FileService } from 'src/app/services/file.service';
 import { PostsService } from 'src/app/services/posts.service';
-import { Subscription } from 'rxjs';
+import { Observable, Subject, Subscription } from 'rxjs';
 import * as RecordRTC from 'recordrtc';
+// import { VideoRecordingService } from './video-recording.service';
+// import { ElectronService } from 'ngx-electron';
+import * as Recorder from 'recorder-js';
 import { DomSanitizer } from "@angular/platform-browser";
+import * as moment from 'moment';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { LocalizationService } from 'src/app/services/localization.service';
+import { variable } from '@angular/compiler/src/output/output_ast';
+import { UserInfoService } from 'src/app/services/user-info.service';
 
-// import { Console } from 'console';
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -18,16 +24,33 @@ import { LocalizationService } from 'src/app/services/localization.service';
 })
 export class HomeComponent implements OnInit {
   isRecordingVideo: boolean = false;
-  urlsVideo: any[] = [];
+  fileUrl: any;
+  BlobURL: any;
+  isRecording = false;
+  recorder: any;
+  startTime: any;
+  _recorded = new Subject<any>();
+  _recordingFailed = new Subject<string>();
+  _recordingTime = new Subject<string>();
+  interval: any;
+  stream: any;
+  myBlooob: any;
+  fileTo: any;
+
+  URL = window.URL || window.webkitURL;
+  gumStream: any;
+  //stream from getUserMedia() 
+  rec: any;
+  //Recorder.js object 
+  input: any;
+  // urlsVideo: any[] = [];
   picURL: any;
 
   styleObject(): Object {
     return { color: this.user.favColor }
   }
-  isRecording = false; //audio recorder item
-  private record: any; //audio recorder item
-  public urls: any[] = []; //audio recorder audios
-  private error: any; //audio recorder error
+  // public urls: any[] = []; //audio recorder audios
+  // private error: any; //audio recorder error
   subscribtion: Subscription[] = [];
   postList: any[] = [];
   LikesList: any[] = [];
@@ -38,8 +61,18 @@ export class HomeComponent implements OnInit {
   user: any;
   postcomfields: string[] = [];
   greating: string;
-  constructor(private fireService: FireService, private postsService: PostsService, private firestorage: AngularFireStorage, private firestore: AngularFirestore, private route: Router, private domSanitizer: DomSanitizer, private locale: LocalizationService) {
+
+  audioURL: string = '';
+  constructor(
+    private storage: AngularFireStorage,
+    // private electronService: ElectronService,
+    private sanitizer: DomSanitizer,
+    private fileService: FileService,
+    private fireService: FireService, private postsService: PostsService, private firestore: AngularFirestore, private route: Router, private domSanitizer: DomSanitizer) {
+
+
     this.user = JSON.parse(localStorage.getItem('userdata')!);
+    // this.user = UserInfoService.user;
     this.greating = "What's up, " + this.user.firstName + " " + this.user.secondName + "?";
     this.subscribtion.push(this.fireService.getCollection('post').subscribe((res) => {
       this.postList = res;
@@ -74,6 +107,7 @@ export class HomeComponent implements OnInit {
     // console.log(`Comments ${this.commentsList}`)
   }
 
+
   async notifyUser(usrId: string, msg: string) {
     let id = this.firestore.createId();
     if (this.user.id !== usrId)
@@ -89,18 +123,112 @@ export class HomeComponent implements OnInit {
         }
       })
   }
+  // async uploadFile(event: any=null, type: string, mfile:any) {
+  //   var filePath: any;
+  //   var file = event
+  //   if(event != null)
+  //     file = event.target.files[0];
+  //   else file=mfile;
 
-  addPost(desc: string, audio: any = null, video: any = null, images: any[] = []) {
+  //   const id = this.firestore.createId()
+  //   if (type == "image")
+  //     filePath = '/post/images/' + id;
+  //   else if (type == "audio")
+  //     filePath = '/post/audio/' + id;
+  //   else if (type == "video")
+  //     filePath = '/post/video/' + id;
+  //   await this.storage.upload(filePath, file);
+  //   await this.storage.refFromURL("gs://sout-2d0f6.appspot.com" + filePath).getDownloadURL().toPromise().then((url => {
+
+  //     if (type == "image") {
+  //       this.post.image = url
+  //     } else if (type == "audio") {
+  //       this.post.audio = url
+  //     } else if (type == "video") {
+  //       this.post.video = url
+  //     }
+  //   }));
+  //   alert('upload done')
+  // }
+
+  async uploadaudio(event: any, type: string) {
+    var filePath: any;
+    const file = event
+    const id = this.firestore.createId()
+    if (type == "image")
+      filePath = '/post/images/' + id;
+    else if (type == "audio")
+      filePath = '/post/audio/' + id;
+    else if (type == "video")
+      filePath = '/post/video/' + id;
+    await this.storage.upload(filePath, file);
+    await this.storage.refFromURL("gs://sout-2d0f6.appspot.com" + filePath).getDownloadURL().toPromise().then((url => {
+
+      if (type == "image") {
+        this.post.image = url
+      } else if (type == "audio") {
+        this.post.audio = url
+      } else if (type == "video") {
+        this.post.video = url
+      }
+    }));
+    alert('upload done')
+    // });
+  }
+
+  // async addPost(desc: string, audio: any = null, video: any = null, images: any[] = []) {
+  //   this.post.description = desc;
+
+  //   this.post.audio = "gs://sout-2d0f6.appspot.com/post/audio/Ouo7bBHraiMYfEO8asaBCNtKJGo23SfGXINGfvbxI1rGwvEL";
+  //   this.post.image = images;
+  //   this.post.video = video;
+
+  //   this.post.owner.id = this.user.id;
+  //   this.post.owner.name = this.user.firstName + " " + this.user.secondName;
+  //   this.post.owner.picURL = this.user.picURL;
+  //   this.post.id = this.firestore.createId();
+  //   if(this.myBlooob){
+  //     console.log("inside")
+  //     this.fileTo = new File([this.myBlooob],`audio_${this.post.id}`,{ type: 'audio/mpeg' })
+  //     await this.uploadFile(null,this.fileTo,'audio')
+  //   }
+
+  //   this.postsService.addPost(this.post).then(() => {
+  //     console.log(this.post)
+  //   });
+
+  //   this.ngOnInit()
+  //   this.postDesc = "";
+  //   this.post = new Post();
+  //   this.urls = []
+  //   this.urlsVideo = []
+
+  // }
+
+  async addPost(desc: string) {
     this.post.description = desc;
     this.post.owner.id = this.user.id;
-    this.post.owner.name = this.user.firstName + " " + this.user.secondName;
-    this.post.owner.picURL = this.user.picURL;
-    this.post.id = this.firestore.createId();
+    this.post.owner.name = this.user.firstName + " " + this.user.secondName,
+      this.post.owner.picURL = this.user.picURL,
+      this.post.id = this.firestore.createId();
+    if (this.myBlooob) {
+      console.log("inside")
+      this.fileTo = new File([this.myBlooob], `audio_${this.post.id}`, { type: 'audio/mpeg' })
+      await this.uploadaudio(this.fileTo, 'audio')
+    }
     this.postsService.addPost(this.post).then(() => {
       console.log(this.post)
     });
     this.ngOnInit()
+    this.postDesc = "";
+    this.post = new Post();
+    this.fileUrl = null
+    // this.urls = []
+    // this.urlsVideo = []
+
+
   }
+
 
   bookmarkpost(post: any) {
     this.firestore.collection("Users").doc(this.user.id).collection("bookmarks").add({
@@ -118,7 +246,22 @@ export class HomeComponent implements OnInit {
   addLike(postid: any) {
     this.firestore.collection('post').doc(postid.id).collection("like").add({
       userid: this.user.id
-    })
+    });
+
+    this.subscribtion.push(this.firestore.collection('post').doc(postid.id).collection('like').valueChanges().subscribe((data) => {
+      this.LikesList[this.postList.findIndex((post) => post == postid)] = data;
+    }));
+    // this.LikesList = [];
+    // this.getLikes(postid);
+    // for (let i = 0; i < this.postList.length; i++) {
+    //   this.getLikes(this.postList[i].id)
+    // }
+    // this.subscribtion.push(this.firestore.collection('post').doc(postid)
+    //       .collection('like').valueChanges().subscribe((data) => {
+    //   this.LikesList = data
+    //   // console.log(data)
+    // }))
+
     this.notifyUser(postid.owner.id, `${this.user.firstName} liked on your post `)
   }
 
@@ -132,10 +275,17 @@ export class HomeComponent implements OnInit {
       description: this.postcomfields[index],
       date: new Date().toISOString(),
     })
+
+    //this.getComments(postid)
+    this.subscribtion.push(this.firestore.collection('post').doc(postid.id).collection('comment').valueChanges().subscribe((data) => {
+      this.commentsList[this.postList.findIndex((post) => post == postid)] = data;
+    }));
+
     this.notifyUser(postid.owner.id, `${this.user.firstName} commented on your post "${this.postcomfields[index]}"`)
+    this.postcomfields[index] = ""
   }
   async getComments(postid: string) {
-    this.commentsList = []
+    // this.commentsList = []
     this.subscribtion.push(await this.firestore.collection('post').doc(postid).collection('comment').valueChanges().subscribe((data) => {
       this.commentsList.push(data);
       // console.log(data)
@@ -147,7 +297,7 @@ export class HomeComponent implements OnInit {
   }
 
   async getLikes(postid: string) {
-    this.LikesList = []
+    //this.LikesList = []
     this.subscribtion.push(await this.firestore.collection('post').doc(postid).collection('like').valueChanges().subscribe((data) => {
       this.LikesList.push(data)
       // console.log(data)
@@ -155,78 +305,196 @@ export class HomeComponent implements OnInit {
   }
 
 
-  startRecording() {
-    this.isRecording = true;
-    let mediaConstraints = {
-      video: false,
-      audio: true
-    };
-    navigator.mediaDevices
-      .getUserMedia(mediaConstraints)
-      .then(this.successCallback.bind(this), this.errorCallback.bind(this));
-  }
+  // startRecording() {
+  //   this.isRecording = true;
+  //   if (this.recorder) {
 
+  //     // It means recording is already started or it is already recording something
+  //     return;
+  //   }
 
-  startVideoRecording() {
-    this.isRecordingVideo = true;
-    let mediaConstraints = {
-      video: true,
-      audio: true
-    };
-    navigator.mediaDevices
-      .getUserMedia(mediaConstraints)
-      .then(this.successCallbackVideo.bind(this), this.errorCallback.bind(this));
-  }
+  //   this._recordingTime.next('00:00');
+  //   navigator.mediaDevices.getUserMedia({ audio: true }).then(s => {
+  //     this.stream = s;
+  //     console.log("s",s)
+  //     this.record();
+  //   }).catch(error => {
+  //     this._recordingFailed.next();
+  //   });
 
-  successCallbackVideo(stream: any) {
-    var options = {
-      mimeType: "video/mp4",
-    };
+  // }
 
-    //Start Actuall Recording
-    var MediaStreamRecorder = RecordRTC.MediaStreamRecorder;
-    this.record = new MediaStreamRecorder(stream, options);
-    this.record.record();
-  }
-
-  successCallback(stream: any) {
-    var options = {
-      mimeType: "audio/wav",
-      numberOfAudioChannels: 1
-    };
-
-    //Start Actuall Recording
-    var StereoAudioRecorder = RecordRTC.StereoAudioRecorder;
-    this.record = new StereoAudioRecorder(stream, options);
-    this.record.record();
-  }
 
   stopRecording() {
     this.isRecording = false;
-    this.record.stop(this.processRecording.bind(this));
+    if (this.recorder) {
+      this.recorder.stop((blob: any) => {
+        if (this.startTime) {
+          const mp3Name = encodeURIComponent('audio_' + new Date().getTime() + '.mp3');
+          this._recorded.next({ blob: blob, title: mp3Name });
+          this.BlobURL = URL.createObjectURL(blob)
+          this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.BlobURL);
+          var anchor = document.createElement("a");
+          anchor.href = this.BlobURL;
+          console.log("stop", this.BlobURL)
+          this.download(this.BlobURL, blob)
+          this.stopMedia();
+        }
+      }, () => {
+        this.stopMedia();
+        this._recordingFailed.next();
+      });
+    }
+
   }
 
-  stopRecordingVideo() {
-    this.isRecordingVideo = false;
-    this.record.stop(this.processRecordingVideo.bind(this));
+  startRecording() {
+    this.isRecording = true;
+    if (this.recorder) {
+
+      return;
+    }
+
+    this._recordingTime.next('00:00');
+    navigator.mediaDevices.getUserMedia({ audio: true }).then(s => {
+      this.stream = s;
+      console.log("s", s)
+      this.record();
+    }).catch(error => {
+      this._recordingFailed.next();
+    });
+
+  }
+  record() {
+    this.recorder = new RecordRTC.StereoAudioRecorder(this.stream, {
+      type: 'audio',
+      mimeType: 'audio/webm'
+    });
+
+    this.recorder.record();
+    this.startTime = moment();
+    this.interval = setInterval(
+      () => {
+        const currentTime = moment();
+        const diffTime = moment.duration(currentTime.diff(this.startTime));
+        const time = this.toMyString(diffTime.minutes()) + ':' + this.toMyString(diffTime.seconds());
+        this._recordingTime.next(time);
+      },
+      1000
+    );
+  }
+  private toMyString(value: any) {
+    let val = value;
+    if (!value) {
+      val = '00';
+    }
+    if (value < 10) {
+      val = '0' + value;
+    }
+    return val;
+  }
+  // stopRecording() {
+  //   this.isRecording = false;
+  //   if (this.recorder) {
+  //     this.recorder.stop((blob:any) => {
+  //       if (this.startTime) {
+  //         const mp3Name = encodeURIComponent('audio_' + new Date().getTime() + '.mp3');
+  //         this._recorded.next({ blob: blob, title: mp3Name });
+  //         this.BlobURL = URL.createObjectURL(blob)
+  //         this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.BlobURL);
+  //         this.post.audio = this.BlobURL
+  //         var anchor = document.createElement("a");
+  //         anchor.href = this.BlobURL;
+  //         this.download(this.BlobURL,blob)
+  //         this.stopMedia();
+  //       }
+  //     }, () => {
+  //       this.stopMedia();
+  //       this._recordingFailed.next();
+  //     });
+  //   }
+
+  // }
+
+  download(url: any, blob: any): any {
+    this.fileService.downloadFile(url).subscribe((response: any) => {
+      let blob2: any = new Blob([response], { type: 'audio/webm' });
+      this.myBlooob = blob2;
+      // fileSaver.saveAs(blob2, 'test.mp3')
+    }), (error: any) => console.log('Error downloading the file'),
+      () => console.info('File downloaded successfully');
   }
 
-  processRecording(blob: any) {
-    this.urls.push(URL.createObjectURL(blob)!);
-  }
+  private stopMedia() {
+    if (this.recorder) {
+      this.recorder = null;
+      clearInterval(this.interval);
+      this.startTime = null;
+      if (this.stream) {
+        this.stream.getAudioTracks().forEach((track: any) => { console.log("track", track); track.stop() });
 
-  processRecordingVideo(blob: any) {
-    this.urlsVideo.push(URL.createObjectURL(blob)!);
+
+        this._recorded.forEach(e => console.log("e", e.title))
+
+
+        this.stream = null;
+      }
+    }
   }
+  abortRecording() {
+    this.stopMedia();
+  }
+  // startVideoRecording() {
+  //   this.isRecordingVideo = true;
+  //   let mediaConstraints = {
+  //     video: true,
+  //     audio: true
+  //   };
+  //   navigator.mediaDevices
+  //     .getUserMedia(mediaConstraints)
+  //     .then(this.successCallbackVideo.bind(this), this.errorCallback.bind(this));
+  // }
+
+  // successCallbackVideo(stream: any) {
+  //   var options = {
+  //     mimeType: "video/mp4",
+  //   };
+
+  //   //Start Actuall Recording
+  //   var MediaStreamRecorder = RecordRTC.MediaStreamRecorder;
+  //   // this.record = new MediaStreamRecorder(stream, options);
+  //   // this.record.record();
+  // }
+
+  // successCallback(stream: any) {
+  //   var options = {
+  //     mimeType: "audio/wav",
+  //     numberOfAudioChannels: 1
+  //   };
+
+  //   //Start Actuall Recording
+  //   var StereoAudioRecorder = RecordRTC.StereoAudioRecorder;
+  // }
+
+  // stopRecordingVideo() {
+  //   this.isRecordingVideo = false;
+  //   // this.record.stop(this.processRecordingVideo.bind(this));
+  // }
+
+
+
+  // processRecordingVideo(blob: any) {
+  //   // this.urlsVideo.push(URL.createObjectURL(blob)!);
+  // }
 
   sanitize(url: string) {
     // console.log(url)
     return this.domSanitizer.bypassSecurityTrustUrl(url);
   }
 
-  errorCallback(error: any) {
-    this.error = 'Can not play audio in your browser';
-  }
+  // errorCallback(error: any) {
+  //   this.error = 'Can not play audio in your browser';
+  // }
 
   async uploadFile(event: any, type: string) {
     var filePath: any;
@@ -238,9 +506,9 @@ export class HomeComponent implements OnInit {
       filePath = '/post/audio/' + id;
     else if (type == "video")
       filePath = '/post/video/' + id;
-    await this.firestorage.upload(filePath, file);
-    const ref = this.firestorage.refFromURL("gs://sout-2d0f6.appspot.com" + filePath).getDownloadURL().toPromise().then((url => {
-      console.log(url);
+    await this.storage.upload(filePath, file);
+    const ref = this.storage.refFromURL("gs://sout-2d0f6.appspot.com" + filePath).getDownloadURL().toPromise().then((url => {
+      console.log(type);
       if (type == "image") {
         this.post.image = url
       } else if (type == "audio") {
@@ -249,8 +517,10 @@ export class HomeComponent implements OnInit {
         this.post.video = url
       }
       console.log(url)
+      alert('upload done')
+      // });
+      alert(this.post.image)
     }));
-    alert('upload done')
-    // });
+    
   }
 }

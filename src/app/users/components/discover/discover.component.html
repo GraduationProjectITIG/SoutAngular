@@ -7,7 +7,6 @@
         <div class="col-9">
             <div class="col-10 col-md-9">
                 <h1 class="ml-3 mb-4">{{'discover.Discover'|translate}}</h1>
-
                 <ul class="nav  ml-3 nav2 nav-tabs" id="nav-tab" role="tablist"
                     style="background-color: #F5F7F8;border-bottom: 2px solid;border-bottom-color:#d8352b;border-radius: 8px;box-shadow: 0px 0.5px 5px grey; width: 100%;margin-bottom: 2%;height: 5%;font-size: 17px;">
 
@@ -36,28 +35,36 @@
                                 style="color: #d8352b;font-size: 16px"></i>
                         </button>
                         <ul class="dropdown-menu" role="menu">
-                            <li role="presentation" style="padding-left:9px;cursor: pointer;">
-                                <a style="color: black">
-                                    <i class="far fa-bookmark"
+                            <li role="presentation" style="padding-left:9px;">
+
+                                <button (click)="bookmarkpost(post)"
+                                    style="color: black;background-color: transparent;border: none;cursor: pointer;">
+                                    <i class="fas fa-bookmark"
                                         style="font-size: 16px;color: #d8352b;margin-right: 5px;"></i>
-                                        {{'discover.Bookmark'|translate}} </a>
+
+                                        {{'discover.Bookmark'|translate}} 
+
+                                    </button>
+
                             </li>
                             <hr>
-                            <li role="presentation" style="padding-left:7px;cursor: pointer;">
+                            <li role="presentation" style="padding-left:9px;cursor: pointer;">
                                 <a role="menuitem" tabindex="-1" (click)="open(content)" style="color: black">
                                     <i class="fas fa-exclamation-triangle"
                                         style="font-size: 15px;color: #d8352b;margin-right: 5px;"></i>
                                         {{'discover.Report_Post'|translate}}
                                     </a>
 
-                                <!-- Modal -->
+                                <!-- Report Post Modal -->
                                 <ng-template #content let-c="close" let-d="dismiss">
+
                                     <div class="modal-header">
                                         <h4 class="modal-title" id="modal-basic-title">{{'discover.Report_Post_!'|translate}}
+
                                         </h4>
                                         <button type="button" class="close" aria-label="Close"
                                             (click)="d('Cross click')">
-                                            <span aria-hidden="true">&times;</span>
+                                            <span aria-hidden="true" style="color:white;">&times;</span>
                                         </button>
                                     </div>
                                     <div class="modal-body">
@@ -74,15 +81,28 @@
                                                 <b *ngIf="uploaded=='Image Uploaded'">&#10003;</b> {{ uploaded }}
                                             </div>
                                         </div>
+                                        <br /><br />
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" id="inputGroupFile01"
+                                                (change)="uploadReportAudio($event)">
+                                            <label class="custom-file-label"
+                                                for="inputGroupFile01">{{audioReStatus}}</label>
+                                            <div *ngIf="uploadedAudio" class="mt-1" style="font-size: small;">
+                                                <b *ngIf="uploadedAudio=='Audio Uploaded'">&#10003;</b> {{ uploadedAudio
+                                                }}
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="modal-footer">
-                                        <button type="button" class="btn btn-outline-dark"
+
+                                        <button type="button" class="btn btn-dark"
                                             (click)="c('Save click');reportPost(title.value,desc.value,post.id)">{{'discover.Report'|translate}}</button>
+
                                     </div>
                                 </ng-template>
                                 <!-- End Modal -->
                             </li>
-                            <hr>
+                            <!-- <hr>
                             <li role="presentation" style="padding-left:7px;cursor: pointer;">
                                 <a style="color: black">
                                     <i class="fas fa-ban" style="font-size: 15px;color: #d8352b;margin-right: 5px;"></i>
@@ -93,8 +113,11 @@
                                 <a style="color: black">
                                     <i class="fas fa-volume-mute"
                                         style="font-size: 16px;color: #d8352b;margin-right: 5px;"></i>
-                                        {{'discover.Mute'|translate}}</a>
-                            </li>
+
+                                        {{'discover.Mute'|translate}}
+                          </a>
+                            </li> -->
+
                         </ul>
                     </div>
                     <div class="poster">
@@ -109,15 +132,22 @@
                     </div>
                     <span class="ml-2">{{post.description}}</span>
                     <br />
-                    <img [src]="post.image[0]" *ngIf="post.image[0]" style="width: 100%;">
+                    <img [src]="post.image" *ngIf="post.image" style="width: 100%;">
                     <span *ngIf="post.audio">
                         <div class="container-audio">
-                            <audio controls loop autoplay>
+                            <audio controls>
                                 <source [src]="post.audio" type="audio/ogg">
                                     {{'discover.audio_tag_msg'|translate}}
                             </audio>
                         </div>
                     </span>
+                    <div *ngIf="post.video">
+                        <div class="container ny-3" style="width: 100%;">
+                            <video controls>
+                                <source [src]="post.video" type="video/mp4">
+                            </video>
+                        </div>
+                    </div>
 
                     <hr style="margin-top: 15px;">
                     <div class="lastRowPost">
@@ -137,7 +167,7 @@
                             </span>
                         </div>
 
-                        <div id="comment" (click)="addComment(post,i)">
+                        <div id="comment" (click)="addComment(post,i);comm.value=''">
 
                             <i class="far fa-comment-alt" id="commentIcon"></i>
                             <span id="commentCont">
@@ -153,7 +183,9 @@
                         <div class="firstRow">
                             <img [src]="picURL" [routerLink]="'/users/profile'" routerLinkActive="active"
                                 style="cursor: pointer;">
-                            <input [(ngModel)]="postcomfields[i]" type="text" placeholder="'discover.Write_a_comment'|translate"
+
+                            <input [(ngModel)]="postcomfields[i]" #comm type="text" placeholder="'discover.Write_a_comment'|translate"
+
                                 id="cmntInput" />
                         </div>
 
@@ -162,7 +194,8 @@
                         style="width: 70%;margin-left: 3.5%;">
 
                         <img style="width: 6%;height: 6%;float: left;border-radius: 50%;"
-                            [src]="user.id==item.writer.id?picURL:item.writer.picURL" [routerLink]="'/users/profile/'+item.writer.id" routerLinkActive="active">
+                            [src]="user.id==item.writer.id?picURL:item.writer.picURL"
+                            [routerLink]="'/users/profile/'+item.writer.id" routerLinkActive="active">
 
                         <div class="pl-2" style="background-color:#F0F2F5;border-radius: 10px;margin-left: 5.5%;">
                             <div><small id="posterName" style="font-size:15px;">{{item.writer.name}}</small>
