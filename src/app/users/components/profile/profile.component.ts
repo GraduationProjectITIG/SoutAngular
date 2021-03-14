@@ -324,4 +324,32 @@ export class ProfileComponent implements OnInit {
     })
   }
 
+  async uploadFilePost(event: any, type: string) {
+    var filePath: any;
+    const file = event.target.files[0];
+    const id = this.firestore.createId()
+    if (type == "image")
+      filePath = '/post/images/' + id;
+    else if (type == "audio")
+      filePath = '/post/audio/' + id;
+    else if (type == "video")
+      filePath = '/post/video/' + id;
+    await this.storage.upload(filePath, file);
+    const ref = this.storage.refFromURL("gs://sout-2d0f6.appspot.com" + filePath).getDownloadURL().toPromise().then((url => {
+      console.log(type);
+      if (type == "image") {
+        this.post.image = url
+      } else if (type == "audio") {
+        this.post.audio = url
+      } else if (type == "video") {
+        this.post.video = url
+      }
+      console.log(url)
+      alert('upload done')
+      // });
+      alert(this.post.image)
+    }));
+
+  }
+
 }
