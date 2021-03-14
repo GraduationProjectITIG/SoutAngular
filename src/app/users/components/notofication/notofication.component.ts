@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { FireService } from 'src/app/services/fire.service';
+import { LocalizationService } from 'src/app/services/localization.service';
+
 
 @Component({
   selector: 'app-notofication',
@@ -11,7 +13,7 @@ export class NotoficationComponent implements OnInit {
   notoficationArr: any[] = [];
   user: any = JSON.parse(localStorage.getItem('userdata')!)
 
-  constructor(private FireService: FireService, private firestore: AngularFirestore
+  constructor(private FireService: FireService, private firestore: AngularFirestore, private locale: LocalizationService
   ) {
 
   }

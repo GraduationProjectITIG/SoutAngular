@@ -13,6 +13,7 @@ import * as fileSaver from 'file-saver';
 import * as moment from 'moment';
 import * as RecordRTC from 'recordrtc';
 
+
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -43,6 +44,7 @@ export class ProfileComponent implements OnInit {
   stream: any;
   myBlooob: any;
   fileTo: any;
+
 
   constructor(private postsService: PostsService, private route: Router, private sanitizer: DomSanitizer,
     private fileService: FileService,

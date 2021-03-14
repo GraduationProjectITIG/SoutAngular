@@ -6,16 +6,14 @@ import { User } from 'src/app/models/user.model';
 import { FireService } from 'src/app/services/fire.service';
 import { PostsService } from 'src/app/services/posts.service';
 import { AngularFirestore } from '@angular/fire/firestore';
-
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Report } from 'src/app/models/report.model';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { finalize, map } from 'rxjs/operators';
-
 import { Subscription } from 'rxjs';
-
 import { ModeService } from 'src/app/services/mode.service';
 import { ISettingsData } from '../../viewModels/isettings-data';
+
 
 @Component({
   selector: 'app-other-profile',
@@ -70,6 +68,7 @@ export class OtherProfileComponent implements OnInit {
   constructor(private postsService: PostsService, private activatedRoute: ActivatedRoute,
     private router: Router, private FireService: FireService, config: NgbModalConfig, private modalService: NgbModal
     , private firestore: AngularFirestore, private storage: AngularFireStorage, private modeService: ModeService) {
+
 
     config.backdrop = 'static';
     config.keyboard = false;

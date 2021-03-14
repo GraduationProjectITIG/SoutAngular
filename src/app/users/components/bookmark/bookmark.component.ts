@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { PostsService } from 'src/app/services/posts.service';
+import { LocalizationService } from 'src/app/services/localization.service';
+
 
 @Component({
   selector: 'app-bookmark',
@@ -11,47 +13,49 @@ import { PostsService } from 'src/app/services/posts.service';
 
 export class BookmarkComponent implements OnInit {
   bookmarks: any[] = [];
-  bookmarkObj={
-    id:'',
-    data:{}
+  bookmarkObj = {
+    id: '',
+    data: {}
   }
   bookmarksRef: any[] = [];
-  book:any
+  book: any
   LikesList: any[] = [];
   commentsList: any[] = [];
   postcomfields: string[] = [];
-  bookmarkFlag:boolean = false;
+  bookmarkFlag: boolean = false;
   user: any = JSON.parse(localStorage.getItem('userdata')!)
-  constructor(config: NgbModalConfig, private modalService: NgbModal,private postsService: PostsService, private firestore: AngularFirestore) {
+  constructor(config: NgbModalConfig, private modalService: NgbModal, private postsService: PostsService, private firestore: AngularFirestore, private locale: LocalizationService) {
     config.backdrop = 'static';
     config.keyboard = false;
-   }
+  }
 
   ngOnInit(): void {
-    this.firestore.collection('Users').doc(this.user.id).collection('bookmarks').get().subscribe((res)=>{this.bookmarks=res.docs});
-    
-    setTimeout(()=>{
-      this.bookmarks.forEach((mark)=>{
-        mark.data().post.get().then((snapshot:any) => {
-          this.bookmarkObj={id:mark.id,data:snapshot.data()};
-           this.getLikes(snapshot.data().id); 
-           this.getComments(snapshot.data().id);  
-           this.bookmarksRef.push(this.bookmarkObj)})
-      })},1000)
-      setTimeout(()=>{console.log(this.bookmarksRef);this.bookmarkFlag=true;},2000)
+    this.firestore.collection('Users').doc(this.user.id).collection('bookmarks').get().subscribe((res) => { this.bookmarks = res.docs });
+
+    setTimeout(() => {
+      this.bookmarks.forEach((mark) => {
+        mark.data().post.get().then((snapshot: any) => {
+          this.bookmarkObj = { id: mark.id, data: snapshot.data() };
+          this.getLikes(snapshot.data().id);
+          this.getComments(snapshot.data().id);
+          this.bookmarksRef.push(this.bookmarkObj)
+        })
+      })
+    }, 1000)
+    setTimeout(() => { console.log(this.bookmarksRef); this.bookmarkFlag = true; }, 2000)
   }
-  deleteBookmark(bookmarkID:string){
-    const ID = this.bookmarksRef.map(function(e) { return e.id; }).indexOf(bookmarkID);
+  deleteBookmark(bookmarkID: string) {
+    const ID = this.bookmarksRef.map(function (e) { return e.id; }).indexOf(bookmarkID);
     this.firestore.collection('Users').doc(this.user.id).collection('bookmarks').doc(this.bookmarks[ID].id).delete();
     const element = document.getElementById(bookmarkID);
     element?.parentNode?.removeChild(element);
   }
-  open(content:any) {
+  open(content: any) {
     console.log(content)
     // document.getElementById(content)?.focus()
-    this.modalService.open( content);
+    this.modalService.open(content);
   }
-  shareBookmark(){
+  shareBookmark() {
     // return this.firestore.collection("/post", ref => ref.where('postID', '==', id)).get().pipe(map(res => {
     //   docs = res.docs
     //   docs.forEach(el => {
@@ -98,7 +102,7 @@ export class BookmarkComponent implements OnInit {
   async getComments(postid: string) {
     await this.firestore.collection('post').doc(postid).collection('comment').valueChanges().subscribe((data) => {
       this.commentsList.push(data);
-     // console.log(data)
+      // console.log(data)
     })
   }
   async getLikes(postid: string) {
@@ -107,6 +111,6 @@ export class BookmarkComponent implements OnInit {
       //console.log(data)
     })
   }
-  
+
 
 }

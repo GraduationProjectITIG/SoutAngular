@@ -12,8 +12,10 @@ import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Report } from 'src/app/models/report.model';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
+import { LocalizationService } from 'src/app/services/localization.service';
 import { ModeService } from 'src/app/services/mode.service';
 import { ISettingsData } from '../../viewModels/isettings-data';
+
 
 
 @Component({
@@ -48,7 +50,7 @@ export class DiscoverComponent implements OnInit {
   audioReStatus: string = "Choose Audio";
   uploadedAudio: string = "";
 
-  constructor(private talentService: TalentService, private route: Router, private postsService: PostsService
+  constructor(private talentService: TalentService, private route: Router, private postsService: PostsService, private locale: LocalizationService
     , private FireService: FireService
     , config: NgbModalConfig, private modalService: NgbModal
     , private firestore: AngularFirestore, private storage: AngularFireStorage, private modeService: ModeService) {

@@ -8,7 +8,8 @@
                 <div id="writePst">
                     <div class="firstRow">
                         <img [src]="user.picURL">
-                        <input type="text" [(ngModel)]="postDesc" [placeholder]="greating" />
+
+                        <input type="text" [(ngModel)]="postDesc" [placeholder]="'home.greating|translate'" />
                         <!-- <span *ngIf="post.audio">
                             <div class="container-audio">
                                 <audio controls loop autoplay>
@@ -71,6 +72,7 @@
                         </li>
                     </ul>
                 </div>
+
                             
                             <!-- startVideoRecording
                             <div style="display: inline-block;background-color: transparent;">
@@ -80,7 +82,8 @@
                             <!-- <i [ngStyle]="{'color': user.favColor}" class="fas fa-paperclip"></i> -->
                             
                            
-                            <input [ngStyle]="{'background-color': user.favColor}" (click)="addPost(postDesc)" class="postButt col-12" type="button" value="Post">
+                            <input [ngStyle]="{'background-color': user.favColor}" (click)="addPost(postDesc)" class="postButt col-12" type="button" [value]="'home.post'|translate">
+
                         </div>
 
                     </div>
@@ -97,16 +100,19 @@
                         <li role="presentation" style="padding-left:9px;">
                             <button (click)="bookmarkpost(post)" style="color: black;background-color: transparent;border: none;cursor: pointer;">
                                 <i class="fas fa-bookmark"
+
                                 [ngStyle]="{'color': user.favColor}"
                                     style="font-size: 16px;margin-right: 5px;"></i>
-                                Bookmark post</button>
+                                {{ 'home.Bookmark_post'|translate}}</button>
+
                         </li>
                         <li *ngIf="post.owner.id == user.id" role="presentation" style="padding-left:9px;">
                             <button (click)="deletepost(post)" style="color: black;background-color: transparent;border: none;cursor: pointer;">
                                 <i class="fas fa-recycle"
                                 [ngStyle]="{'color': user.favColor}"
                                     style="font-size: 16px;margin-right: 5px;"></i>
-                                Delete post</button>
+                                {{ 'home.Delete_post'|translate}}</button>
+
                         </li>
 
                     </ul>
@@ -126,7 +132,7 @@
                     <div class="container-audio">
                         <audio controls  >
                             <source [src]="sanitize(post.audio)" type="audio/ogg">
-                            Your browser dose not Support the audio Tag
+                                {{ 'home.audio_tag_msg'|translate}}
                         </audio>
                     </div>
                 </span>
@@ -144,19 +150,19 @@
                     <div id="like" (click)="addLike(post)">
                         <i class="far fa-thumbs-up" id="likeIcon"></i>
                         <span id="likeCont">
-                            Like <span class="badge badge-pill badge-light">{{LikesList[i].length}}</span>
+                            {{ 'home.Like'|translate}} <span class="badge badge-pill badge-light">{{LikesList[i].length}}</span>
                         </span>
                     </div>
                     <div id="comment" >
                         <i class="fas fa-microphone-alt"></i>
                         <span id="commentCont">
-                            Voice
+                            {{ 'home.Voice'|translate}}  
                         </span>
                     </div>
                     <div id="comment" (click)="addComment(post,i)">
                         <i class="far fa-comment-alt" id="commentIcon"></i>
                         <span id="commentCont">
-                             Comment <span class="badge badge-pill badge-light">{{commentsList[i].length}}</span>
+                            {{ 'home.Comment'|translate}}     <span class="badge badge-pill badge-light">{{commentsList[i].length}}</span>
                         </span>
                     </div>
                 </div>
@@ -165,7 +171,7 @@
                     <hr style="margin-top: 55px;margin-bottom: 10px">
                     <div class="firstRow">
                         <img [src]="user.picURL">
-                        <input [(ngModel)]="postcomfields[i]" type="text" placeholder="Write a comment..." class="cmntInput" />
+                        <input [(ngModel)]="postcomfields[i]" type="text" placeholder="'home.Write_a_comment'|translate" class="cmntInput" />
                     </div>
 
                 </div>

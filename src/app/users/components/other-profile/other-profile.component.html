@@ -49,7 +49,8 @@
             </span>
 
 
-            <span class="nav-item" data-toggle="tooltip" data-placement="bottom" title="Follow">
+            <span class="nav-item" data-toggle="tooltip" data-placement="bottom" [title]="'other-profile.Follow'|translate">
+
                 <div class="dropdown edit dropleft"
                     style="box-shadow: 0px 0.5px 5px grey;border-radius:50%;width: 40px;float: right;background-color: #F5F7F8;">
                     <button class="btn btn-default " type="button" id="menu1" data-toggle="dropdown" (click)="follow()"
@@ -61,7 +62,7 @@
                     </button>
                 </div>
             </span>
-            <span class="nav-item" data-toggle="tooltip" data-placement="bottom" title="Send Message">
+            <span class="nav-item" data-toggle="tooltip" data-placement="bottom" title="'other-profile.Send_Message'|translate">
                 <div class="edit dropleft"
                     style="box-shadow: 0px 0.5px 5px grey;border-radius:50%;width: 40px;float: right;background-color: #F5F7F8;">
                     <button [routerLink]="[ '/users/messages' ]" routerLinkActive="active" class="btn btn-default "
@@ -84,19 +85,15 @@
                     <ul class="dropdown-menu" style="width: 25%;border: none" role="menu" aria-labelledby="menu1">
                         <li role="presentation" style="padding-left:7px;">
                             <a role="menuitem" tabindex="-1" (click)="open(content)">
-
                                 <i class="fas fa-exclamation-triangle" style="font-size: 15px"
                                     [ngStyle]="{'color': user.favColor}"></i>
 
-                                Report Profile
+                                {{ 'other-profile.Report'|translate}}
                             </a>
-
-
-
                         </li>
                         <!-- <hr>
                         <li role="presentation" style="padding-left:5px;"><a role="menuitem" tabindex="-1"> <i
-                                    class="fas fa-ban" style="font-size: 15px" [ngStyle]="{'color': user.favColor}"></i> Block</a></li> -->
+                                    class="fas fa-ban" style="font-size: 15px" [ngStyle]="{'color': user.favColor}"></i> {{ 'other-profile.Block'|translate}}</a></li> -->
                     </ul>
                 </div>
             </span>
@@ -117,8 +114,9 @@
                         <li class="nav-item">
                             <a class="nav-link side" [routerLink]="[ '/users/home' ]" routerLinkActive="active">
 
+
                                 <i class="fas fa-home" [ngStyle]="{'color': user.favColor}"></i><span
-                                    class="d-none d-md-inline-block"> Home</span>
+                                    class="d-none d-md-inline-block"> {{ 'other-profile.Home'|translate}}</span>
 
                             </a>
                         </li>
@@ -129,7 +127,7 @@
                             <a class="nav-link side" [routerLink]="[ '/users/notifications' ]"
                                 routerLinkActive="active">
                                 <i class="fas fa-bell" [ngStyle]="{'color': user.favColor}"></i><span
-                                    class="d-none d-md-inline-block">Notifications <b
+                                    class="d-none d-md-inline-block"> {{ 'other-profile.Notifications'|translate}}  <b
                                         class="badge badge-pill">{{notificationsNo}}</b></span>
                             </a>
                         </li>
@@ -138,10 +136,8 @@
                     <div>
                         <li class="nav-item">
                             <a class="nav-link side" [routerLink]="[ '/users/messages' ]" routerLinkActive="active">
-
                                 <i class="fas fa-envelope" [ngStyle]="{'color': user.favColor}"></i><span
-                                    class="d-none d-md-inline-block"> Messages</span>
-
+                                    class="d-none d-md-inline-block"> {{ 'other-profile.Messages'|translate}}</span>
                             </a>
                         </li>
                         <hr>
@@ -150,10 +146,8 @@
                     <div>
                         <li class="nav-item">
                             <a class="nav-link side" [routerLink]="[ '/users/talents' ]" routerLinkActive="active">
-
                                 <i class="fas fa-music" [ngStyle]="{'color': user.favColor}"></i><span
-                                    class="d-none d-md-inline-block"> Talents</span>
-
+                                    class="d-none d-md-inline-block"> {{ 'other-profile.Talents'|translate}} </span>
                             </a>
                         </li>
                         <hr>
@@ -163,8 +157,7 @@
                             <a class="nav-link side" [routerLink]="[ '/users/discover' ]" routerLinkActive="active">
 
                                 <i class="fas fa-hashtag" [ngStyle]="{'color': user.favColor}"></i><span
-                                    class="d-none d-md-inline-block"> Discover</span>
-
+                                    class="d-none d-md-inline-block"> {{ 'other-profile.Discover'|translate}}</span>
                             </a>
                         </li>
                         <hr>
@@ -172,11 +165,8 @@
                     <div>
                         <li class="nav-item">
                             <a class="nav-link side" [routerLink]="[ '/users/settings' ]" routerLinkActive="active">
-
                                 <i class="fas fa-cog" [ngStyle]="{'color': user.favColor}"></i><span
-                                    class="d-none d-md-inline-block"> Settings</span>
-
-
+                                    class="d-none d-md-inline-block"> {{ 'other-profile.Settings'|translate}}</span>
                             </a>
                         </li>
                         <hr>
@@ -184,9 +174,8 @@
                     <div>
                         <li class="nav-item">
                             <a class="nav-link side" [routerLink]="[ '/users/bookmarks' ]" routerLinkActive="active">
-
                                 <i class="fas fa-bookmark" [ngStyle]="{'color': user.favColor}"></i><span
-                                    class="d-none d-md-inline-block"> Bookmarks</span>
+                                    class="d-none d-md-inline-block"> {{ 'other-profile.Bookmarks'|translate}}</span>
 
                             </a>
                         </li>
@@ -208,7 +197,7 @@
                         <i class="fas fa-video" id="liveIcon" [ngStyle]="{'color': user.favColor}"></i>
                         <i class="fas fa-microphone-alt" [ngStyle]="{'color': user.favColor}"></i>
                         <i class="fas fa-paperclip" [ngStyle]="{'color': user.favColor}"></i>
-                        <input id="postButt" type="button" value="Post" [ngStyle]="{'background-color': user.favColor}">
+                        <input id="postButt" type="button" [value]="'other-profile.Post'|translate" [ngStyle]="{'background-color': user.favColor}">
                     </div>
 
                 </div>
@@ -304,8 +293,7 @@
                     <div class="container-audio">
                         <audio controls>
                             <source [src]="post.audio" type="audio/ogg">
-                            Your browser dose not Support the audio Tag
-                        </audio>
+                                {{ 'other-profile.audio_tag_msg'|translate}}                        </audio>
                     </div>
                 </span>
                 <div *ngIf="post.video">
@@ -323,20 +311,22 @@
                     <div id="like" (click)="addLike(post)">
                         <i class="far fa-thumbs-up" id="likeIcon"></i>
                         <span id="likeCont">
-                            Like <span class="badge badge-pill badge-light">{{LikesList[i].length}}</span>
+                            {{ 'other-profile.Like'|translate}}
+                             <span class="badge badge-pill badge-light">{{LikesList[i].length}}</span>
                         </span>
                     </div>
                     <div id="comment">
                         <i class="fas fa-microphone-alt"></i>
                         <span id="commentCont">
-                            Voice
+                            {{ 'other-profile.Voice'|translate}} 
                         </span>
                     </div>
 
                     <div id="comment" (click)="addComment(post,i);comm.value=''">
                         <i class="far fa-comment-alt" id="commentIcon"></i>
                         <span id="commentCont">
-                            Comment <span class="badge badge-pill badge-light">{{commentsList[i].length}}</span>
+                            {{ 'other-profile.Comment'|translate}}
+                             <span class="badge badge-pill badge-light">{{commentsList[i].length}}</span>
                         </span>
                     </div>
                 </div>
@@ -347,7 +337,8 @@
                     <div class="firstRow">
                         <img [src]="picURL" [routerLink]="'/users/profile'" routerLinkActive="active"
                             style="cursor: pointer;">
-                        <input [(ngModel)]="postcomfields[i]" type="text" #comm placeholder="Write a comment..."
+                        <input [(ngModel)]="postcomfields[i]" type="text" #comm  [placeholder]="'other-profile.Write_a_comment'|translate"
+
                             id="cmntInput" />
                     </div>
 

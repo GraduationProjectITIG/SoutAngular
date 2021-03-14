@@ -13,6 +13,7 @@ import * as Recorder from 'recorder-js';
 import { DomSanitizer } from "@angular/platform-browser";
 import * as moment from 'moment';
 import { AngularFireStorage } from '@angular/fire/storage';
+import { LocalizationService } from 'src/app/services/localization.service';
 import { variable } from '@angular/compiler/src/output/output_ast';
 import { UserInfoService } from 'src/app/services/user-info.service';
 
@@ -60,6 +61,7 @@ export class HomeComponent implements OnInit {
   user: any;
   postcomfields: string[] = [];
   greating: string;
+
   audioURL: string = '';
   constructor(
     private storage: AngularFireStorage,
@@ -67,6 +69,7 @@ export class HomeComponent implements OnInit {
     private sanitizer: DomSanitizer,
     private fileService: FileService,
     private fireService: FireService, private postsService: PostsService, private firestore: AngularFirestore, private route: Router, private domSanitizer: DomSanitizer) {
+
 
     this.user = JSON.parse(localStorage.getItem('userdata')!);
     // this.user = UserInfoService.user;
