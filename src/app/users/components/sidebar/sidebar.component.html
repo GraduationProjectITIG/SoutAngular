@@ -12,7 +12,8 @@
                     <a class="nav-link " [routerLink]="[ '/users/notifications' ]" routerLinkActive="active">
 
                         <i class="fas fa-bell"  [ngStyle]="{'color': user.favColor}" ></i><span class="d-none d-md-inline-block font">
-                            {{'sidebar.notifications'|translate}} <span [ngStyle]="{'color': user.favColor}"  class="badge badge-pill">{{notificationsNo}}</span></span>
+                            {{'sidebar.notifications'|translate}}
+                             <span [ngStyle]="{'color': user.favColor}"  class="badge badge-pill">{{notificationsNo}}</span></span>
                     </a>
                 </li>
                 <hr>
@@ -21,7 +22,8 @@
                 <li class="nav-item">
                     <a class="nav-link " [routerLink]="[ '/users/messages' ]" routerLinkActive="active">
                         <i class="fas fa-envelope" [ngStyle]="{'color': user.favColor}" ></i><span class="d-none d-md-inline-block font">
-                            {{'sidebar.messages'|translate}} <span [ngStyle]="{'color': user.favColor}" class="badge badge-pill"></span></span>
+                            {{'sidebar.messages'|translate}}
+                             <span [ngStyle]="{'color': user.favColor}" class="badge badge-pill"></span></span>
                     </a>
                 </li>
                 <hr>
@@ -29,7 +31,9 @@
             <div>
                 <li class="nav-item">
                     <a class="nav-link " [routerLink]="[ '/users/talents' ]" routerLinkActive="active">
-                        <i class="fas fa-music" [ngStyle]="{'color': user.favColor}"></i><span class="d-none d-md-inline-block font"> {{'sidebar.talents'|translate}}</span>
+                        <i class="fas fa-music" [ngStyle]="{'color': user.favColor}"></i><span class="d-none d-md-inline-block font">
+                             {{'sidebar.talents'|translate}}
+                            </span>
                     </a>
                 </li>
                 <hr>
@@ -38,7 +42,8 @@
                 <li class="nav-item">
                     <a class="nav-link " [routerLink]="[ '/users/discover' ]" routerLinkActive="active">
                         <i class="fas fa-hashtag" [ngStyle]="{'color': user.favColor}"></i><span class="d-none d-md-inline-block font">
-                           {{ 'sidebar.discover'|translate}}</span>
+                           {{ 'sidebar.discover'|translate}}
+                        </span>
                     </a>
                 </li>
                 <hr>
@@ -46,7 +51,9 @@
             <div>
                 <li class="nav-item">
                     <a class="nav-link " [routerLink]="[ '/users/settings' ]" routerLinkActive="active">
-                        <i class="fas fa-cog" [ngStyle]="{'color': user.favColor}"></i><span class="d-none d-md-inline-block font"> {{'sidebar.settings'|translate}}</span>
+                        <i class="fas fa-cog" [ngStyle]="{'color': user.favColor}"></i><span class="d-none d-md-inline-block font">
+                             {{'sidebar.settings'|translate}}
+                            </span>
                     </a>
                 </li>
                 <hr>
@@ -54,7 +61,9 @@
             <div>
                 <li class="nav-item">
                 <a class="nav-link " [routerLink]="[ '/users/bookmarks' ]" routerLinkActive="active">
-                    <i class="fas fa-bookmark" [ngStyle]="{'color': user.favColor}"></i><span class="d-none d-md-inline-block font"> {{'sidebar.bookmarks'|translate}}</span>
+                    <i class="fas fa-bookmark" [ngStyle]="{'color': user.favColor}"></i><span class="d-none d-md-inline-block font"> 
+                        {{'sidebar.bookmarks'|translate}}
+                    </span>
                 </a>
             </li>
             <hr>
@@ -62,12 +71,20 @@
             <div>
                 <li class="" >
                    
-                                          <h3 style="font-size: 10pt;" class="font">{{'sidebar.your_Interests'|translate}} <small>{{'sidebar.click_to_remove'|translate}}</small></h3>
+                                          <h3 style="font-size: 10pt;" class="font">
+                                            {{'sidebar.your_Interests'|translate}}
+                                             <small>
+                                                {{'sidebar.click_to_remove'|translate}}
+                                            </small></h3>
                                        <div *ngFor="let item of usertalents">
                                             <span type="button"  (click)="removeTalent(item.ID)" [ngStyle]="{'background-color': user.favColor}" class="badge badge-pill text-light " >{{item.name}}</span>
                                        </div>
                                        <hr>
-                                       <h3 style="font-size: 10pt;" class="font">{{'sidebar.add_Interests'|translate}} <small>{{'sidebar.click_to_add'|translate}}</small></h3>
+                                       <h3 style="font-size: 10pt;" class="font">
+                                        {{'sidebar.add_Interests'|translate}}
+                                         <small>
+                                             {{'sidebar.click_to_add'|translate}}
+                                            </small></h3>
                                        <div *ngFor="let item of talentsList">
                                             <span type="button" (click)="addtalents(item)" [ngStyle]="{'background-color': user.favColor}" class="badge badge-pill text-light" >{{item.name}}</span>
                                        </div>

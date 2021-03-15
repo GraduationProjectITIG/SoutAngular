@@ -13,12 +13,8 @@ export class NotoficationComponent implements OnInit {
   notoficationArr: any[] = [];
   user: any = JSON.parse(localStorage.getItem('userdata')!)
 
-<<<<<<< HEAD
-  constructor(private FireService: FireService, private firestore: AngularFirestore) {
-=======
   constructor(private FireService: FireService, private firestore: AngularFirestore, private locale: LocalizationService
   ) {
->>>>>>> 1.0
 
   }
 
