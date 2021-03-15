@@ -6,6 +6,7 @@ import { ISettingsShow } from 'src/app/users/viewModels/isettings';
 import { ISettingsData } from 'src/app/users/viewModels/isettings-data';
 import { User } from 'src/app/models/user.model';
 import { UiSwitchModule } from 'ngx-toggle-switch';
+import { TranslateService } from '@ngx-translate/core';
 
 import { ActivatedRoute, Router } from '@angular/router';
 import { AngularFireAuth } from '@angular/fire/auth';
@@ -37,10 +38,19 @@ export class SettingComponent implements OnInit {
   actionCode: any;
   actionCodeChecked: boolean = false;
   mode: any;
-  constructor(private modeService: ModeService, private fireService: FireService, private firestore: AngularFirestore, private fireAuth: AngularFireAuth, private router: Router, private route: ActivatedRoute, private locale: LocalizationService) {
-
+  lang: string;
+  constructor(private translate: TranslateService, private modeService: ModeService, private fireService: FireService, private localization: LocalizationService, private fireAuth: AngularFireAuth, private router: Router, private route: ActivatedRoute, private locale: LocalizationService) {
+    this.lang = this.locale.getLanguage()
+    if (this.lang === '' || this.lang === null) this.lang = 'en';
+    this.locale.setLanguage(this.lang);
     this.userAuth = JSON.parse(localStorage.getItem('userauth')!);
   }
+
+
+  changeLang(lang: string) {
+    this.locale.setLanguage(lang);
+  }
+
 
   ngOnInit(): void {
     this.user = JSON.parse(localStorage.getItem('userdata')!)

@@ -9,7 +9,7 @@
                     <div class="firstRow">
                         <img [src]="user.picURL">
 
-                        <input type="text" [(ngModel)]="postDesc" [placeholder]="'home.greating|translate'" />
+                        <input type="text" [(ngModel)]="postDesc" [placeholder]="'home.greating'|translate" />
                         <!-- <span *ngIf="post.audio">
                             <div class="container-audio">
                                 <audio controls loop autoplay>
@@ -126,13 +126,13 @@
                 <span style="padding: 2%;" *ngIf="post.description">{{post.description}}</span>
                 <!-- <span style="padding: 2%;" *ngIf="post.image.length>0"><img *ngFor="let item of post.image;" [src]="item." class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}" alt=""></span> -->
                 <div class="mx-auto col-6">
-                    <img [src]="post.image" *ngIf="post.image!=false" style="height: 100%; width: 100%; object-fit: contain" >
+                    <img [src]="post.image" *ngIf="post.image" style="height: 100%; width: 100%; object-fit: contain" >
                 </div>
                 <span *ngIf="post.audio">
                     <div class="container-audio">
                         <audio controls  >
                             <source [src]="sanitize(post.audio)" type="audio/ogg">
-                                {{ 'home.audio_tag_msg'|translate}}
+                                {{ 'home.audio_tag_msg' | translate }}
                         </audio>
                     </div>
                 </span>
@@ -171,7 +171,7 @@
                     <hr style="margin-top: 55px;margin-bottom: 10px">
                     <div class="firstRow">
                         <img [src]="user.picURL">
-                        <input [(ngModel)]="postcomfields[i]" type="text" placeholder="'home.Write_a_comment'|translate" class="cmntInput" />
+                        <input [(ngModel)]="postcomfields[i]" type="text" [placeholder]="'home.Write_a_comment'|translate" class="cmntInput" />
                     </div>
 
                 </div>

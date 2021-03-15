@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { SearchServiceService } from 'src/app/services/search-service.service';
 import { UserInfoService } from 'src/app/services/user-info.service';
 import { LocalizationService } from 'src/app/services/localization.service';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -16,7 +17,7 @@ export class HeaderComponent implements OnInit {
 
   @ViewChild("searchValue") searchValue: any = null;
 
-  constructor(private usrInfo: UserInfoService, private route: Router, private searchServ: SearchServiceService, private locale: LocalizationService) {
+  constructor(private translate: TranslateService,private usrInfo: UserInfoService, private route: Router, private searchServ: SearchServiceService, private locale: LocalizationService) {
 
   }
 

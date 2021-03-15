@@ -3,6 +3,7 @@ import { AngularFirestore } from '@angular/fire/firestore';
 import { NgbModal, NgbModalConfig } from '@ng-bootstrap/ng-bootstrap';
 import { PostsService } from 'src/app/services/posts.service';
 import { LocalizationService } from 'src/app/services/localization.service';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -24,7 +25,7 @@ export class BookmarkComponent implements OnInit {
   postcomfields: string[] = [];
   bookmarkFlag: boolean = false;
   user: any = JSON.parse(localStorage.getItem('userdata')!)
-  constructor(config: NgbModalConfig, private modalService: NgbModal, private postsService: PostsService, private firestore: AngularFirestore, private locale: LocalizationService) {
+  constructor(private translate: TranslateService,config: NgbModalConfig, private modalService: NgbModal, private postsService: PostsService, private firestore: AngularFirestore, private locale: LocalizationService) {
     config.backdrop = 'static';
     config.keyboard = false;
   }

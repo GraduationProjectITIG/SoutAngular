@@ -21,14 +21,18 @@ import { ChatComponent } from './components/chat/chat.component';
 import { SettingComponent } from './components/setting/setting.component';
 import { UiSwitchModule } from 'ngx-toggle-switch';
 import { FormsModule } from '@angular/forms';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+
+// import ngx-translate and the http loader
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 
 
-export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http);
+// required for AOT compilation
+
+export function customHttpLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, "../../assets/i18n/", ".json");
 }
 @NgModule({
   declarations: [
@@ -64,14 +68,19 @@ export function HttpLoaderFactory(http: HttpClient) {
     AngularFirestoreModule,
     FormsModule,
     AngularFireStorageModule,
-    TranslateModule.forRoot({
+    HttpClientModule,
+    TranslateModule.forChild({
       loader: {
         provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
-      }
+        useFactory: customHttpLoader,
+        deps: [HttpClient],
+      },
+      isolate: false
     }),
 
-  ]
+  ],
+  providers: [
+    HttpClient,
+  ],
 })
 export class UsersModule { }

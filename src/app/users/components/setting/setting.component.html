@@ -117,7 +117,18 @@
             <div  *ngIf="settings.manageAccount" id="deactivateAccSetting" [ngStyle]="{'padding-left':'1rem'}">
                 <h3 [ngStyle]="{'margin-top': '3%', 'text-align':'center'}" >{{'reports.Deactivation'|translate}}</h3>
 
+                 
+
                 <div class="dropdown-divider"></div>
+ <div >
+        <select class="custom-select" (change)="changeLang($event.target.value)" >
+            <option value="en" [selected]="lang == 'en'" >English</option>
+            <option value="ar" [selected]="lang == 'ar'" >Arabic</option>
+        </select>
+        
+    </div>
+
+
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" value="" (click)="deactivate()">
                     <label class="form-check-label h6 darkFont" for="deAct ">

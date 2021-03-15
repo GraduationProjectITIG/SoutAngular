@@ -10,6 +10,7 @@ import { FireService } from 'src/app/services/fire.service';
 import { UserInfoService } from 'src/app/services/user-info.service';
 import { ISettingsData } from '../../viewModels/isettings-data';
 import { LocalizationService } from 'src/app/services/localization.service';
+import { TranslateService } from '@ngx-translate/core';
 
 
 
@@ -27,7 +28,7 @@ export class SidebarComponent implements OnInit {
 
   usertalents: any[] = []
   settingsData: ISettingsData = { privateAcc: false, favColor: '', favMode: '', oldPassword: '', deactive: false };
-  constructor(private modeService: ModeService, private usrInfo: FireService, private route: Router, private firestore: AngularFirestore, private locale: LocalizationService) {
+  constructor(private translate: TranslateService,private modeService: ModeService, private usrInfo: FireService, private route: Router, private firestore: AngularFirestore, private locale: LocalizationService) {
     this.user = JSON.parse(localStorage.getItem('userdata')!);
     this.loadTalents()
     this.loadUserTalents()

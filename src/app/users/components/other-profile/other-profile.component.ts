@@ -13,6 +13,7 @@ import { finalize, map } from 'rxjs/operators';
 import { Subscription } from 'rxjs';
 import { ModeService } from 'src/app/services/mode.service';
 import { ISettingsData } from '../../viewModels/isettings-data';
+import { TranslateService } from '@ngx-translate/core';
 
 
 @Component({
@@ -65,7 +66,7 @@ export class OtherProfileComponent implements OnInit {
 
   subscribtion: Subscription[] = [];
   
-  constructor(private postsService: PostsService, private activatedRoute: ActivatedRoute,
+  constructor(private postsService: PostsService, private activatedRoute: ActivatedRoute, private translate: TranslateService,
     private router: Router, private FireService: FireService, config: NgbModalConfig, private modalService: NgbModal
     , private firestore: AngularFirestore, private storage: AngularFireStorage, private modeService: ModeService) {
 

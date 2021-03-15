@@ -12,7 +12,7 @@ import { FileService } from 'src/app/services/file.service';
 import * as fileSaver from 'file-saver';
 import * as moment from 'moment';
 import * as RecordRTC from 'recordrtc';
-
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-profile',
@@ -48,6 +48,7 @@ export class ProfileComponent implements OnInit {
 
   constructor(private postsService: PostsService, private route: Router, private sanitizer: DomSanitizer,
     private fileService: FileService,
+    private translate: TranslateService,
     private firestore: AngularFirestore, private storage: AngularFireStorage, private FireService: FireService) {
 
   }

@@ -12,6 +12,7 @@ import { formatDate } from '@angular/common';
 import { map, timestamp } from 'rxjs/operators';
 import { ModeService } from 'src/app/services/mode.service';
 import { LocalizationService } from 'src/app/services/localization.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-chat',
@@ -41,7 +42,7 @@ export class ChatComponent implements OnInit {
   value: boolean;
   image: string = 'https://firebasestorage.googleapis.com/v0/b/sout-2d0f6.appspot.com/o/chats%2FchstBG2.jpg?alt=media&token=23f956ad-7b3e-4fae-b105-d538f865d930';
   otherImage: string = 'https://firebasestorage.googleapis.com/v0/b/sout-2d0f6.appspot.com/o/chats%2FchatBGW2.jpg?alt=media&token=8566f008-6fd2-4ce6-831e-2f8b77ac19ca';
-  constructor(private modeService: ModeService, private storage: AngularFireStorage, private chatService: UserChatsService, private firestore: AngularFirestore, private locale: LocalizationService) {
+  constructor(private translate: TranslateService,private modeService: ModeService, private storage: AngularFireStorage, private chatService: UserChatsService, private firestore: AngularFirestore, private locale: LocalizationService) {
     this.user = JSON.parse(localStorage.getItem('userdata')!);
     const ref = this.storage.ref('chats/chstBG2.jpg');
     const ref2 = this.storage.ref('chats/chatBGW.jpg');

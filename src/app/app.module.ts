@@ -63,7 +63,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     ModalModule,
     NgxLoadingModule,
     BrowserAnimationsModule,
-    HttpClientModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -74,8 +73,9 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
   providers: [
     UserInfoService,
-    HttpClient
-    , BsModalRef,AudioRecordingService
+    HttpClient,
+     BsModalRef,
+    AudioRecordingService
   ],
   bootstrap: [AppComponent]
 })
