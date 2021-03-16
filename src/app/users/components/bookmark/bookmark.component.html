@@ -5,7 +5,7 @@
         <div class="col-9 col-md-8" style="margin-top:1.2%">
             <div class="btn-group btn-group-lg" role="group" aria-label="bookmarksType">
                 <button type="button" class="btn btn-dark">Later</button>
-                <button type="button" class="btn btn-secondary"><i class="fas fa-plus-circle"></i></button>
+                <!-- <button type="button" class="btn btn-secondary"><i class="fas fa-plus-circle"></i></button> -->
             </div>
 
             <!-- <button type="button" class="btn btn-primary" (click)="openModal(template)">Create template modal</button> -->
@@ -21,7 +21,7 @@
                     <!-- <span aria-hidden="true" class="closeBtn" [id]="bookmark.id]" (click)="deleteBookmark($event.target.id)">&times;</span> -->
                     <div class="row" (click)="open(content)" >
                         <div class="col-3">
-                            <div *ngIf="bookmark.data.image.length;then postImg else userImg"></div>    
+                            <div *ngIf="bookmark.data.image;then postImg else userImg"></div>    
                             <ng-template #postImg ><img [src]="bookmark.data.image[0]" class="rounded float-left bookmarkIcon" alt="soul"></ng-template>
                             <ng-template #userImg >
                                 <img [src]="bookmark.data.owner.picURL" class="rounded float-left bookmarkIcon" alt="soul">
@@ -52,8 +52,9 @@
                                     </div>
 
                                     <span *ngIf="bookmark.data.description">{{bookmark.data.description}}</span> 
-                                    <div *ngIf="bookmark.data.image.length">
-                                        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                                    <div *ngIf="bookmark.data.image">
+                                        <img [src]="bookmark.data.image" style="width: 25vw;" >
+                                        <!-- <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
                                             <ol *ngFor="let index of bookmark.data.image.length" class="carousel-indicators">
                                               <li data-target="#carouselExampleIndicators" data-slide-to="index" class="active"></li>
                                             </ol>
@@ -70,12 +71,18 @@
                                               <span class="carousel-control-next-icon" aria-hidden="true"></span>
                                               <span class="sr-only">Next</span>
                                             </a>
-                                          </div>
+                                          </div> -->
                                     </div>
                                     <!-- <img src="bookmark.owner.picURL" class="rounded float-left bookmarkIcon" style="margin: 2% 2% 2% 0%" alt="dark"> -->
                                     <span *ngIf="bookmark.data.audio" class="soutplayer">
-                                        <audio id="player" src="../../../../assets/02 Atgah Wahed.mp3"></audio>
-                                        <div>
+                                        <div class="container-audio">
+                                            <audio controls loop autoplay>
+                                                <source [src]="bookmark.data.audio" type="audio/ogg">
+                                                Your browser dose not Support the audio Tag
+                                            </audio>
+                                        </div>
+                                        <!-- <audio id="player" src="bookmark.data.audio"></audio> -->
+                                        <!-- <div>
                                             <i onclick="document.getElementById('player').play()" class="fas fa-2x fa-play-circle" style="color: #d8352b"></i>
                                             <i onclick="document.getElementById('player').pause()" class="fas fa-2x fa-pause-circle" style="color: #d8352b"></i>
                                             <span id="audtime"></span>
@@ -89,7 +96,7 @@
                                                     <input type="range" id="vol" min="0" max="100">
                                                 </div>
                                             </span>
-                                        </div>
+                                        </div> -->
                                     </span>
 
                                 </div>
@@ -144,7 +151,7 @@
                             </div>
                           </ng-template>
                     </div>
-                    <i class="fas fa-share-square float-right" style="margin-top:-1rem;" (click)="shareBookmark()"></i>
+                    <!-- <i class="fas fa-share-square float-right" style="margin-top:-1rem;" (click)="shareBookmark()"></i> -->
 
                     </div>
                 </ng-container>

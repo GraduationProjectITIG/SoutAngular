@@ -28,20 +28,37 @@ export class BookmarkComponent implements OnInit {
    }
 
   ngOnInit(): void {
-    this.firestore.collection('Users').doc(this.user.id).collection('bookmarks').get().subscribe((res)=>{this.bookmarks=res.docs});
-    
-    setTimeout(()=>{
+    this.firestore.collection('Users').doc(this.user.id).collection('bookmarks').get().subscribe((res)=>{
+      this.bookmarks=res.docs;
       this.bookmarks.forEach((mark)=>{
+        
         mark.data().post.get().then((snapshot:any) => {
+          console.log(snapshot.data());
           this.bookmarkObj={id:mark.id,data:snapshot.data()};
            this.getLikes(snapshot.data().id); 
            this.getComments(snapshot.data().id);  
-           this.bookmarksRef.push(this.bookmarkObj)})
-      })},1000)
-      setTimeout(()=>{console.log(this.bookmarksRef);this.bookmarkFlag=true;},2000)
+           this.bookmarksRef.push(this.bookmarkObj);
+           console.log(this.bookmarksRef);this.bookmarkFlag=true;
+          })
+      });
+    });
+    // setTimeout(()=>{
+    //   // console.log("this.bookmarks");console.log(this.bookmarks);
+    //   this.bookmarks.forEach((mark)=>{
+        
+    //     mark.data().post.get().then((snapshot:any) => {
+    //       console.log(snapshot.data());
+    //       this.bookmarkObj={id:mark.id,data:snapshot.data()};
+    //        this.getLikes(snapshot.data().id); 
+    //        this.getComments(snapshot.data().id);  
+    //        this.bookmarksRef.push(this.bookmarkObj)})
+    //   })},1000)
+    //   setTimeout(()=>{console.log(this.bookmarksRef);this.bookmarkFlag=true;},2000)
   }
   deleteBookmark(bookmarkID:string){
-    const ID = this.bookmarksRef.map(function(e) { return e.id; }).indexOf(bookmarkID);
+    console.log("bookmarkID",bookmarkID);
+    const ID = this.bookmarksRef.map(function(e) {console.log('e',e.data.id); return e.data.id; }).indexOf(bookmarkID);
+    console.log("ID",ID);
     this.firestore.collection('Users').doc(this.user.id).collection('bookmarks').doc(this.bookmarks[ID].id).delete();
     const element = document.getElementById(bookmarkID);
     element?.parentNode?.removeChild(element);

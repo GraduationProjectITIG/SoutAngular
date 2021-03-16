@@ -19,7 +19,7 @@ import { ModeService } from 'src/app/services/mode.service';
   styleUrls: ['./setting.component.scss']
 })
 export class SettingComponent implements OnInit {
-  settings: ISettingsShow={accountPrivacy:true,themes:false,changePassword:false,notifications:false,report:false,manageAccount:false};
+  settings: ISettingsShow={accountPrivacy:false,themes:true,changePassword:false,notifications:false,report:false,manageAccount:false};
   settingsData: ISettingsData={privateAcc:false,favColor:'',favMode:'',oldPassword:'',deactive:false};
   openedValue:boolean=false;
   alertDeact:boolean=false;

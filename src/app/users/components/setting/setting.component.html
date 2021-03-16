@@ -7,7 +7,7 @@
                 <ul class="nav flex-column">
                     <h1 [ngStyle]="{'margin-left': '3%'}">Settings</h1>
                     <div class="dropdown-divider"></div>
-                    <div>
+                    <!-- <div>
                         <li class="nav-item dark" [ngClass]="settings.accountPrivacy ? 'active' : 'inactive'">
                             <a class="nav-link " (click)= "disableOthers('accountPrivacy')">
                                 <i class="fas fa-user-lock " [ngStyle]="{'color': settingsData.favColor}"></i><span class="d-md-inline-block font" > Account Privacy</span>
@@ -15,7 +15,7 @@
                             </a>
                         </li>
                         <div class="dropdown-divider"></div>
-                    </div>
+                    </div> -->
                     <div>
                         <li class="nav-item dark" id="theme" [ngClass]="settings.themes ? 'active' : 'inactive'">
                             <a class="nav-link" (click)= "disableOthers('themes')">
@@ -34,7 +34,7 @@
                         </li>
                         <div class="dropdown-divider"></div>
                     </div>
-                    <div>
+                    <!-- <div>
                         <li class="nav-item dark" id="notifications" [ngClass]="settings.notifications ? 'active' : 'inactive'">
                             <a class="nav-link side" (click)= "disableOthers('notifications')">
                                 <i class="fas fa-bell" [ngStyle]="{'color': settingsData.favColor}"></i><span class="d-none d-md-inline-block font"> Notifications</span>
@@ -42,7 +42,7 @@
                             </a>
                         </li>
                         <div class="dropdown-divider"></div>
-                    </div>
+                    </div> -->
                     <div>
                         <li class="nav-item dark" id="manageAccount" [ngClass]="settings.manageAccount ? 'active' : 'inactive'">
                             <a class="nav-link side" (click)= "disableOthers('manageAccount')">
@@ -131,7 +131,7 @@
                     <button type="button" class="btn btn-light btn-sm" (click)="confirmDeactivate()">Confirm</button>
                 </div>
             </div>
-            <div  *ngIf="settings.accountPrivacy" id="accPrivacySetting" [ngStyle]=" {'padding-left':'1rem'}">
+            <!-- <div  *ngIf="settings.accountPrivacy" id="accPrivacySetting" [ngStyle]=" {'padding-left':'1rem'}">
                 <h3 [ngStyle]="{'margin-top': '3%', 'text-align':'center'}">Privacy</h3>
 
                 <div class="dropdown-divider"></div>
@@ -147,7 +147,7 @@
                     </button> <strong>Wornning!</strong> Anyone can see your posts.
                     <button type="button" class="btn btn-light btn-sm" (click)="confirmPublic()">Confirm</button>
                 </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>

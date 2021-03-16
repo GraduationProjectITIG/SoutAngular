@@ -34,14 +34,14 @@ export class SidebarComponent implements OnInit {
     else this.modeService.defaultMode();
   }
 
-  OnDark() {
-    this.modeService.OnDarkFont(document.querySelectorAll(".nav-item a"), document.querySelectorAll(".darkfont"));
-    this.modeService.OnDarkColumn(document.querySelectorAll("#sidebarMenu"));
-  }
-  defaultMode() {
-    this.modeService.defaultModeColumn(document.querySelectorAll("#sidebarMenu"));
-    this.modeService.defaultModeFont(document.querySelectorAll(".nav-item a"), document.querySelectorAll(".darkfont"));
-  }
+  // OnDark() {
+  //   this.modeService.OnDarkFont(document.querySelectorAll(".nav-item a"), document.querySelectorAll(".darkfont"));
+  //   this.modeService.OnDarkColumn(document.querySelectorAll("#sidebarMenu"));
+  // }
+  // defaultMode() {
+  //   this.modeService.defaultModeColumn(document.querySelectorAll("#sidebarMenu"));
+  //   this.modeService.defaultModeFont(document.querySelectorAll(".nav-item a"), document.querySelectorAll(".darkfont"));
+  // }
 
   loadTalents() {
     this.subscribtion.push(this.usrInfo.getCollection('talents').subscribe(data => {
