@@ -42,7 +42,7 @@ export class SearchComponent implements OnInit {
     //////////////////////////////////////////////////////////
     //trying static data
 
-    this.arrayOfUser[0] = this.user1,
+    // this.arrayOfUser[0] = this.user1,
 
 
 
@@ -56,7 +56,7 @@ export class SearchComponent implements OnInit {
 
     })
     this.fireService.getCollection("Users").subscribe((res) => {
-      this.userArr = res.filter((user) => {
+      this.arrayOfUser = res.filter((user) => {
         console.log("user>>" + user.firstName)
 
         return (user.firstName == this.inputValFromService)

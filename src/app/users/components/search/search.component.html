@@ -1,5 +1,6 @@
+<app-header></app-header>
 <div id="Later">
-    <ng-container >
+  
         <div   [id]="bookmark.data.id" *ngFor="let user of arrayOfUser;let i=index" (click)="goToProfile(user.id)" class="bookmark" >
             
             <div class="row" (click)="open(content)" >
@@ -13,7 +14,7 @@
                 </div>
             </div>
         </div>
-    </ng-container>
+   
  </div>
 
 
