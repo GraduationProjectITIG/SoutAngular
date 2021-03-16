@@ -60,16 +60,16 @@ export class HomeComponent implements OnInit {
   user: any;
   postcomfields: string[] = [];
   greating: string;
-
+lang:string=''
   audioURL: string = '';
   constructor(
     private storage: AngularFireStorage,
     private translate: TranslateService, private sanitizer: DomSanitizer,
     private fileService: FileService,
-    private fireService: FireService, private postsService: PostsService, private firestore: AngularFirestore, private route: Router, private domSanitizer: DomSanitizer) {
-
-
-
+    private fireService: FireService, private postsService: PostsService, private firestore: AngularFirestore, private route: Router, private domSanitizer: DomSanitizer,private locale:LocalizationService) {
+    this.lang = this.locale.getLanguage()
+    if (this.lang === '' || this.lang === null) this.lang = 'en';
+    this.locale.setLanguage(this.lang);
     this.user = JSON.parse(localStorage.getItem('userdata')!);
     // this.user = UserInfoService.user;
     this.greating = "What's up, " + this.user.firstName + " " + this.user.secondName + "?";
@@ -87,6 +87,9 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.lang = this.locale.getLanguage()
+    if (this.lang === '' || this.lang === null) this.lang = 'en';
+    this.locale.setLanguage(this.lang);
     if (!localStorage.getItem('userdata')) {
       this.route.navigate(['/landing'])
     }

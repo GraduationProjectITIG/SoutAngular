@@ -37,6 +37,9 @@ export class UserInfoService {
             throw `User not found.`
           }
         }))
+        if (localStorage.getItem('userdata')==null){
+          setTimeout(()=>{},1000)
+        }
       } else {
         throw `User not found`
       }

@@ -23,9 +23,9 @@
   },
   "home": {
     "greating":"greating",
-    "Post":"Post",
-    "Bookmark_post":" Bookmark post",
-    "Delete_post":"Delete post",
+    "post":"Post",
+    "bookmark_post":" Bookmark post",
+    "delete_post":"Delete post",
     "audio_tag_msg":"Your browser dose not Support the audio Tag",
     "Like":"Like",
     "Voice":"Voice",
@@ -35,18 +35,18 @@
   "talents": {
     "greating":"greating",
     "Post":"Post",
-    "Bookmark_this_post":"Bookmark this post",
+    "bookmark_this_post":"Bookmark this post",
     "audio_tag_msg":" Your browser dose not Support the audio Tag",
-    "Like":"Like",
-    "Voice":"Voice",
-    "Comment":"Comment",
-    "Write_a_comment":"Write a comment..."
+    "like":"Like",
+    "voice":"Voice",
+    "comment":"Comment",
+    "write_a_comment":"Write a comment..."
   },
   "notfound":{
 
     "error_msg":"Error 404 Page Not found",
     "please_enter_a_URL":"please make sure you entered a correct URL.",
-    "Back_to_home":"Back to home"
+    "back_to_home":"Back to home"
   },
   "bookmark":{
     "Later":"Later",
