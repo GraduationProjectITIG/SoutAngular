@@ -12,6 +12,8 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { FireService } from 'src/app/services/fire.service';
 import { ModeService } from 'src/app/services/mode.service';
+import { TranslateService } from '@ngx-translate/core';
+import { LocalizationService } from 'src/app/services/localization.service';
 
 @Component({
   selector: 'app-setting',
@@ -35,9 +37,12 @@ export class SettingComponent implements OnInit {
   actionCode:any;
   actionCodeChecked:boolean=false;
   mode:any;
-  constructor(private modeService:ModeService,private fireService:FireService, private firestore: AngularFirestore, private fireAuth: AngularFireAuth,private router: Router,private route: ActivatedRoute) {
-    
+  lang: string;
+  constructor(private translate: TranslateService, private localization: LocalizationService,private modeService:ModeService,private fireService:FireService, private firestore: AngularFirestore, private fireAuth: AngularFireAuth,private router: Router,private route: ActivatedRoute) {
+    this.lang = this.localization.getLanguage()
     this.userAuth= JSON.parse(localStorage.getItem('userauth')!);
+    if (this.lang === '' || this.lang === null) this.lang = 'en';
+    this.localization.setLanguage(this.lang);
    }
 
   ngOnInit(): void {
@@ -52,6 +57,9 @@ export class SettingComponent implements OnInit {
     }
     else
       this.router.navigate(['/landing'])
+  }
+  changeLang(lang: string) {
+    this.localization.setLanguage(lang);
   }
   onDarkEv(e:any){
     // console.log(e)
@@ -86,6 +94,7 @@ export class SettingComponent implements OnInit {
     this.alertDeact=true;
   }
   confirmDeactivate() {
+    this.firestore.collection('Users').doc(this.user.id).delete();
     window.location.href = "../landing";
   }
   resetPassword(){
