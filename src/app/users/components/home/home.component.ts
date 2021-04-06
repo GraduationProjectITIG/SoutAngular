@@ -99,7 +99,7 @@ URL = window.URL || window.webkitURL;
 
     // console.log(`Likes ${this.LikesList}`)
     // console.log(`Comments ${this.commentsList}`)
-  }
+  } 
 
 
   async notifyUser(usrId: string, msg: string) {
