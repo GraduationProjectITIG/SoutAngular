@@ -11,6 +11,11 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { FileService } from 'src/app/services/file.service';
 import * as fileSaver from 'file-saver';
 import * as moment from 'moment';
+import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { Subscription } from 'rxjs';
+
+import { ISettingsData } from 'src/app/users/ViewModels/isettings-data';
+import { ModeService } from 'src/app/services/mode.service';
 import * as RecordRTC from 'recordrtc';
 
 @Component({
@@ -43,12 +48,47 @@ export class ProfileComponent implements OnInit {
   stream:any;
   myBlooob:any;
   fileTo:any;
+  settingsData: ISettingsData = { privateAcc: false, favColor: '', favMode: '', oldPassword: '', deactive: false };
 
-  constructor(private postsService: PostsService, private route: Router, private sanitizer: DomSanitizer,
-    private fileService: FileService, 
-    private firestore: AngularFirestore, private storage: AngularFireStorage, private FireService: FireService) {
+  constructor(private postsService: PostsService, private route: Router,
+    private firestore: AngularFirestore, private fileService: FileService, private storage: AngularFireStorage, private FireService: FireService,
+    config: NgbModalConfig, private modalService: NgbModal, private modeService: ModeService, private domSanitizer: DomSanitizer, private firestorage: AngularFireStorage) {
 
+    this.modalService.dismissAll();
+    }
+  following: number = 0;
+  followers: number = 0;
+
+  usersList: User[] = [];
+
+  followersList: any[] = [];
+  followingList: any[] = [];
+
+  updatedUser: User = new User();
+// <<<<<<< mai
+
+  subscribtion: Subscription[] = [];
+
+  comment: object = {};
+  isRecordingVideo: boolean = false;
+  urlsVideo: any[] = [];
+  checkCover: boolean | undefined;
+  updatedPost: object = {};
+// =======
+
+//   subscribtion: Subscription[] = [];
+
+//   comment: object = {};
+//   isRecordingVideo: boolean = false;
+//   urlsVideo: any[] = [];
+
+// >>>>>>> master
+  styleObject(): Object {
+    return { color: this.user.favColor }
   }
+  public urls: any[] = []; //audio recorder audios
+  private error: any; //audio recorder error
+  
 
 
 
@@ -58,14 +98,31 @@ export class ProfileComponent implements OnInit {
       this.userName = this.user.firstName + " " + this.user.secondName;
       this.picURL = this.user.picURL;
       this.coverPicURL = this.user.coverPicURL;
-
+// <<<<<<< mai
+// =======
+      this.settingsData.favMode = this.user.favMode;
+// >>>>>>> master
       this.postMind = "What's on your mind, " + this.user.firstName + "?";
+
+      if (this.user.coverPicURL === "")
+        this.checkCover = false;
+      else
+        this.checkCover = true;
       this.getAllPosts();
       this.getnotificationsno();
+      this.getFollowers();
+      this.getFollowing();
+      console.log(this.user);
+
+
+      if (this.settingsData.favMode === "dark") { this.modeService.OnDark(); this.settingsData.favMode = "dark"; }
+      else if (this.settingsData.favMode === "light") { this.modeService.defaultMode(); this.settingsData.favMode = "light"; }
+
     }
     else
       this.route.navigate(['/landing'])
   }
+
 
   download(url:any, blob:any): any {
     this.fileService.downloadFile(url).subscribe((response: any) => { 
@@ -102,7 +159,7 @@ stopRecording() {
         const mp3Name = encodeURIComponent('audio_' + new Date().getTime() + '.mp3');
         this._recorded.next({ blob: blob, title: mp3Name });
         this.BlobURL = URL.createObjectURL(blob)
-        this.fileUrl = this.sanitizer.bypassSecurityTrustResourceUrl(this.BlobURL);
+        this.fileUrl = this.domSanitizer.bypassSecurityTrustResourceUrl(this.BlobURL);
         var anchor = document.createElement("a");
         anchor.href = this.BlobURL;
         console.log("stop",this.BlobURL)
@@ -117,23 +174,6 @@ stopRecording() {
 
 }
 
-startRecording() {
-  this.isRecording = true;
-  if (this.recorder) {
-    
-    return;
-  }
-
-  this._recordingTime.next('00:00');
-  navigator.mediaDevices.getUserMedia({ audio: true }).then(s => {
-    this.stream = s;
-    console.log("s",s)
-    this.record();
-  }).catch(error => {
-    this._recordingFailed.next();
-  });
-
-}
 
 record() {
 
@@ -164,6 +204,7 @@ if (value < 10) {
 }
 return val;
 }
+
 
   uploadFile(event: any, type: string) {
     var filePath: any;
@@ -253,11 +294,11 @@ return val;
         this.fileTo = new File([this.myBlooob],`audio_${this.post.id}`,{ type: 'audio/mpeg' })
         await this.uploadaudio(this.fileTo,'audio')
       }
-    this.postsService.addPost(this.post).then(() => {
-      console.log(this.post)
-    });
-    this.ngOnInit()
-  }
+      this.postsService.addPost(this.post).then(() => {
+        console.log(this.post)
+      });
+      this.ngOnInit()
+    }
 
   deletePost(id: string) {
     this.postsService.deletePost(id).then(
@@ -270,15 +311,27 @@ return val;
 
   }
 
-  addLike(post: any) {
-    this.firestore.collection('post').doc(post.id).collection("like").add({
+  addLike(postid: any) {
+    this.firestore.collection('post').doc(postid.id).collection("like").add({
       userid: this.user.id
-    })
-    this.notifyUser(post.owner.id, `${this.user.firstName} liked on your post `)
+    });
+
+    this.subscribtion.push(this.firestore.collection('post').doc(postid.id).collection('like').valueChanges().subscribe((data) => {
+      this.LikesList[this.postList.findIndex((post)=>post == postid)] = data;
+    }));
+
+    this.notifyUser(postid.owner.id, `${this.user.firstName} liked on your post `)
   }
 
-  addComment(post: any, index: number) {
-    this.firestore.collection(`post`).doc(post.id).collection('comment').add({
+// <<<<<<< mai
+  addComment(postid: any, index: number) {
+    this.firestore.collection(`post`).doc(postid.id).collection('comment').add({
+// =======
+//   addComment(post: any, index: number) {
+//     var commentId = this.firestore.createId();
+//     this.comment = {
+//       id: commentId,
+// >>>>>>> master
       writer: {
         id: this.user.id,
         name: this.user.firstName + " " + this.user.secondName,
@@ -286,22 +339,34 @@ return val;
       },
       description: this.postcomfields[index],
       date: new Date().toISOString(),
+// <<<<<<< mai
     })
-    this.notifyUser(post.owner.id, `${this.user.firstName} commented on your post "${this.postcomfields[index]}"`)
-  }
+// =======
+//     }
+//     this.FireService.setDocument("/post/" + post.id + "/comment/" + commentId, { ...this.comment });
+//     this.notifyUser(post.owner.id, `${this.user.firstName} commented on your post "${this.postcomfields[index]}"`)
+//   }
+// >>>>>>> master
 
+    //this.getComments(postid)
+    this.subscribtion.push(this.firestore.collection('post').doc(postid.id).collection('comment').valueChanges().subscribe((data) => {
+      this.commentsList[this.postList.findIndex((post)=>post == postid)] = data;
+    }));
+
+    this.notifyUser(postid.owner.id, `${this.user.firstName} commented on your post "${this.postcomfields[index]}"`)
+  }
   async getComments(postid: string) {
-    await this.firestore.collection('post').doc(postid).collection('comment').valueChanges().subscribe((data) => {
+    // this.commentsList = []
+    this.subscribtion.push(await this.firestore.collection('post').doc(postid).collection('comment').valueChanges().subscribe((data) => {
       this.commentsList.push(data);
-      console.log(data)
-    })
+      // console.log(data)
+    }))
   }
 
   async getLikes(postid: string) {
-    await this.firestore.collection('post').doc(postid).collection('like').valueChanges().subscribe((data) => {
+    this.subscribtion.push(await this.firestore.collection('post').doc(postid).collection('like').valueChanges().subscribe((data) => {
       this.LikesList.push(data)
-      console.log(data)
-    })
+    }))
   }
 
   async notifyUser(usrId: string, msg: string) {
@@ -323,5 +388,206 @@ return val;
       this.notificationsNo = data.length
     })
   }
+
+  getFollowers() {
+    this.followersList = []
+    this.subscribtion.push(this.firestore.collection(`Users`).doc(this.user.id).collection('followers').valueChanges().subscribe((data) => {
+      this.followers = data.length
+      data.forEach(el => {
+        this.followersList.push(el);
+      })
+    })
+    )
+
+  }
+
+  getFollowing() {
+    this.followingList = []
+    this.subscribtion.push(this.firestore.collection(`Users`).doc(this.user.id).collection('following').valueChanges().subscribe((data) => {
+      this.following = data.length
+      data.forEach(el => {
+        this.followingList.push(el);
+      })
+
+    })
+    )
+    console.log(this.followingList)
+
+  }
+
+  changeName(name: string) {
+    var splittedName = name.split(" ");
+    this.user.firstName = splittedName[0];
+    this.user.secondName = (splittedName[1]) ? splittedName[1] : "";
+    // this.user.firstName = name
+    this.FireService.updateDocument("Users/" + this.user.id, this.user);
+
+    this.postList.forEach(el => {
+      el.owner.name = name;
+      this.FireService.updateDocument("post/" + el.id, el);
+
+      // this.getComments(el.id);
+      // console.log(this.commentsList)
+      // this.commentsList.forEach(element => {
+      //   element.forEach((x:any) => {
+      //     x.writer.name = name;
+      //     this.FireService.updateDocument("/post/" + el.id + "/comment/" + element.id, x);
+      //   })
+
+      // })
+    });
+
+
+    // this.getAllUsers();
+
+    // this.usersList.forEach(el => {
+    //   this.FireService.getCollection("Users/" + el.id + "/followers/").subscribe(res => {
+    //     res.forEach(element => {
+    //       if (element.userid == this.user.id) {
+    //         element.name = name;
+    //       }
+    //     })
+    //   });
+    // });
+
+    console.log(this.postList)
+
+    localStorage.setItem('userdata', JSON.stringify(this.user));
+    this.ngOnInit()
+  }
+
+  getUserById(id: string) {
+    this.FireService.getDocument("Users/" + id).subscribe(res => {
+      this.updatedUser = res
+      console.log(this.updatedUser)
+    });
+  }
+
+  getAllUsers() {
+    this.FireService.getCollection("Users/").subscribe(res => {
+      this.usersList = res
+      console.log(this.usersList)
+    });
+  }
+
+  open(content: any) {
+    this.modalService.open(content);
+  }
+
+  ngOnDestroy(): void {
+    this.subscribtion.forEach(element => {
+      element.unsubscribe();
+    })
+  }
+
+
+  processRecording(blob: any) {
+    this.urls.push(URL.createObjectURL(blob)!);
+  }
+
+  processRecordingVideo(blob: any) {
+    this.urlsVideo.push(URL.createObjectURL(blob)!);
+  }
+
+  sanitize(url: string) {
+    // console.log(url)
+    return this.domSanitizer.bypassSecurityTrustUrl(url);
+  }
+
+  errorCallback(error: any) {
+    this.error = 'Can not play audio in your browser';
+  }
+
+  async uploadFile2(event: any, type: string) {
+    var filePath: any;
+    const file = event.target.files[0];
+    const id = this.firestore.createId()
+    if (type == "image")
+      filePath = '/post/images/' + id;
+    else if (type == "audio")
+      filePath = '/post/audio/' + id;
+    else if (type == "video")
+      filePath = '/post/video/' + id;
+    await this.firestorage.upload(filePath, file);
+    const ref = this.firestorage.refFromURL("gs://sout-2d0f6.appspot.com" + filePath).getDownloadURL().toPromise().then((url => {
+      console.log(url);
+      if (type == "image") {
+        this.post.image = url
+      } else if (type == "audio") {
+        this.post.audio = url
+      } else if (type == "video") {
+        this.post.video = url
+      }
+      console.log(url)
+    }));
+    alert('upload done')
+    // });
+  }
+
+  bookmarkpost(post: any) {
+    this.firestore.collection("Users").doc(this.user.id).collection("bookmarks").add({
+      post: this.firestore.collection("post").doc(post.id).ref,
+    })
+    alert(`post added`)
+  }
+
+
+  editInfo(bio: string, mobile: string, birthDate: Date) {
+    this.user.bio = bio;
+    this.user.mobile = mobile;
+    this.user.birthDate = birthDate;
+    this.FireService.updateDocument("Users/" + this.user.id, this.user);
+    localStorage.setItem('userdata', JSON.stringify(this.user));
+
+    // this.route.navigate(['/users/profile']).then(() => {
+    //   window.location.reload();
+    // });
+  }
+
+  editPostFun(desc: string, postId: string,post:Post) {
+    post.description = desc;
+    console.log(post)
+    this.FireService.updateDocument(`post/${postId}`, post);;
+
+    console.log(this.post)
+    // this.ngOnInit()
+    // this.route.navigate(['/users/profile']).then(() => {
+    //       window.location.reload();
+    //     });
+  }
+
+  async uploadFileEdit(event: any, type: string,post:Post) {
+    var filePath: any;
+    const file = event.target.files[0];
+    const id = this.firestore.createId()
+    if (type == "image")
+      filePath = '/post/images/' + id;
+    else if (type == "audio")
+      filePath = '/post/audio/' + id;
+    else if (type == "video")
+      filePath = '/post/video/' + id;
+    await this.firestorage.upload(filePath, file);
+    const ref = this.firestorage.refFromURL("gs://sout-2d0f6.appspot.com" + filePath).getDownloadURL().toPromise().then((url => {
+      console.log(url);
+      if (type == "image") {
+        post.image = url
+      } else if (type == "audio") {
+        post.audio = url
+      } else if (type == "video") {
+        post.video = url
+      }
+      console.log(url)
+    }));
+    alert('upload done')
+    // });
+  }
+
+  openEdit(content: any) {
+    this.modalService.open(content, {
+      size: 'lg'
+    });
+  }
+  
+
 
 }

@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs';
 import { FireService } from 'src/app/services/fire.service';
 
 import { UserInfoService } from 'src/app/services/user-info.service';
-import { ISettingsData } from '../../viewModels/isettings-data';
+import { ISettingsData } from 'src/app/users/viewModels/isettings-data';
 
 
 @Component({
@@ -34,14 +34,6 @@ export class SidebarComponent implements OnInit {
     else this.modeService.defaultMode();
   }
 
-  // OnDark() {
-  //   this.modeService.OnDarkFont(document.querySelectorAll(".nav-item a"), document.querySelectorAll(".darkfont"));
-  //   this.modeService.OnDarkColumn(document.querySelectorAll("#sidebarMenu"));
-  // }
-  // defaultMode() {
-  //   this.modeService.defaultModeColumn(document.querySelectorAll("#sidebarMenu"));
-  //   this.modeService.defaultModeFont(document.querySelectorAll(".nav-item a"), document.querySelectorAll(".darkfont"));
-  // }
 
   loadTalents() {
     this.subscribtion.push(this.usrInfo.getCollection('talents').subscribe(data => {
