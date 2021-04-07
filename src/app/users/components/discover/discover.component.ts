@@ -12,7 +12,11 @@ import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { Report } from 'src/app/models/report.model';
 import { AngularFirestore } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
+import { LocalizationService } from 'src/app/services/localization.service';
 import { ModeService } from 'src/app/services/mode.service';
+import { ISettingsData } from '../../viewModels/isettings-data';
+import { TranslateService } from '@ngx-translate/core';
+
 
 
 @Component({
@@ -46,8 +50,8 @@ export class DiscoverComponent implements OnInit {
   reportAudioURL: string = "";
   audioReStatus: string = "Choose Audio";
   uploadedAudio: string = "";
-  
-  constructor(private talentService: TalentService, private route: Router, private postsService: PostsService
+
+  constructor(private translate: TranslateService,private talentService: TalentService, private route: Router, private postsService: PostsService, private locale: LocalizationService
     , private FireService: FireService
     , config: NgbModalConfig, private modalService: NgbModal
     , private firestore: AngularFirestore, private storage: AngularFireStorage, private modeService: ModeService) {
@@ -84,8 +88,8 @@ export class DiscoverComponent implements OnInit {
 
   getPostsByTalent(id: string) {
     this.postList = []
-    this.LikesList= []
-    this.commentsList=[]
+    this.LikesList = []
+    this.commentsList = []
     this.postsService.getPostsOfTalent(id).subscribe(res => {
       this.postList = res
 
@@ -106,8 +110,8 @@ export class DiscoverComponent implements OnInit {
 
   getAllPosts() {
     this.postList = []
-    this.LikesList= []
-    this.commentsList=[]
+    this.LikesList = []
+    this.commentsList = []
     this.FireService.getCollection("post/").subscribe(res => {
       this.postList = res
 
@@ -140,7 +144,7 @@ export class DiscoverComponent implements OnInit {
     });
 
     this.subscribtion.push(this.firestore.collection('post').doc(postid.id).collection('like').valueChanges().subscribe((data) => {
-      this.LikesList[this.postList.findIndex((post)=>post == postid)] = data;
+      this.LikesList[this.postList.findIndex((post) => post == postid)] = data;
     }));
 
     this.notifyUser(postid.owner.id, `${this.user.firstName} liked on your post `)
@@ -159,7 +163,7 @@ export class DiscoverComponent implements OnInit {
 
     //this.getComments(postid)
     this.subscribtion.push(this.firestore.collection('post').doc(postid.id).collection('comment').valueChanges().subscribe((data) => {
-      this.commentsList[this.postList.findIndex((post)=>post == postid)] = data;
+      this.commentsList[this.postList.findIndex((post) => post == postid)] = data;
     }));
 
     this.notifyUser(postid.owner.id, `${this.user.firstName} commented on your post "${this.postcomfields[index]}"`)
@@ -197,9 +201,9 @@ export class DiscoverComponent implements OnInit {
       element.unsubscribe();
     })
   }
-  
+
   //************** For Report ********************
-  
+
   uploadReportImage(event: any) {
     var filePath: any;
     const file = event.target.files[0];

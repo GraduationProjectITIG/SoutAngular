@@ -22,9 +22,169 @@
     "reset":"Reset"
   },
   "home": {
-
+    "greating":"greating",
+    "post":"Post",
+    "bookmark_post":" Bookmark post",
+    "delete_post":"Delete post",
+    "audio_tag_msg":"Your browser dose not Support the audio Tag",
+    "Like":"Like",
+    "Voice":"Voice",
+    "Comment":"Comment",
+    "Write_a_comment":"Write a comment..."
   },
   "talents": {
+    "greating":"greating",
+    "Post":"Post",
+    "Bookmark_this_post":"Bookmark this post",
+    "Audio_tag_msg":" Your browser dose not Support the audio Tag",
+    "Like":"Like",
+    "Voice":"Voice",
+    "Comment":"Comment",
+    "Write_a_comment":"Write a comment..."
+  },
+  "notfound":{
+
+    "error_msg":"Error 404 Page Not found",
+    "please_enter_a_URL":"please make sure you entered a correct URL.",
+    "back_to_home":"Back to home"
+  },
+  "bookmark":{
+    "Later":"Later",
+    "Saved_from":"Saved from",
+    "Previous":"Previous",
+    "Next":"Next",
+    "Like":"Like",
+    "Voice":"Voice",
+    "Comment":"Comment",
+    "Write_a_comment":"Write a comment..."
+  },
+  "chat":{
+    "Search":"Search...",
+    "Chat_with":"Chat with",
+    "Messages":"Messages",
+    "View_profile":" View profile",
+    "Block":"Block",
+    "Type_your_message":"Type your message..."
+  },
+  "discover":{
+    "Discover":"Discover",
+    "All":"All",
+    "Bookmark":"Bookmark",
+    "Report_Post":"Report Post",
+    "Report_Post_!":"Report Post !",
+    "Title":"Title",
+    "Description":"Description",
+    "Report":"Report",
+    "Block":"Block",
+    "Mute":"Mute",
+    "audio_tag_msg":" Your browser dose not Support the audio Tag",
+    "Like":"Like",
+    "Voice":"Voice",
+    "Comment":"Comment",
+    "Write_a_comment":"Write a comment..."
+  },
+  "header":{
+    "Search":"Search"
+  },
+  "notofication":{
+    "Notifications":"Notifications:"
+  },
+  "other-profile":{
+    "Follow":"Follow",
+    "Send_Message":"Send Message",
+    "Report_Profile":"Report Profile",
+    "Report":"Report",
+    "Title":"Title",
+    "Description":"Description",
+    "Block":"Block",
+    "Home":"Home",
+    "Notifications":"Notifications",
+    "Messages":"Messages",
+    "Talents":"Talents",
+    "Discover":"Discover",
+    "Settings":"Settings",
+    "Interests":"Interests",
+    "Bookmarks":"Bookmarks",
+    "Post":"Post",
+    "audio_tag_msg":" Your browser dose not Support the audio Tag",
+    "Like":"Like",
+    "Voice":"Voice",
+    "Comment":"Comment",
+    "Write_a_comment":"Write a comment..."
+  },
+
+  "profile":{
+    "Edit":"Edit",
+    "Edit_Profile_Pic":"Edit Profile Pic",
+    "Edit_Cover":"Edit Cover",
+    "Home":"Home",
+    "Notifications":"Notifications",
+    "Messages":"Messages",
+    "Talents":"Talents",
+    "Discover":"Discover",
+    "Settings":"Settings",
+    "Interests":"Interests",
+    "Bookmarks":"Bookmarks",
+    "Post":"Post",
+    "Delete_Post":"Delete Post",
+    "audio_tag_msg":" Your browser dose not Support the audio Tag",
+    "Like":"Like",
+    "Voice":"Voice",
+    "Comment":"Comment",
+    "Write_a_comment":"Write a comment..."
+  },
+
+  "reports":{
+  
+    
+  },
+
+  "search":{
+
+  },
+
+  "setting":{
+    "Settings":"Settings",
+    "Account_Privacy":"Account Privacy",
+    "Theme":"Theme",
+    "Change_Password":"Change Password",
+    "Notifications":"Notifications",
+    "Manage_Account":"Manage Account",
+    "Themes":"Themes",
+    "Icons_Color":"Icons Color",
+    "Reset":"Reset",
+    "Enable_Dark_Mode":"Enable Dark Mode ",
+    "Save":"Save",
+    "Password":"Password",
+    "Old_Password":"Old Password",
+    "Email_Security":"Email Security",
+    "Send_Code":"Send Code",
+    "Deactivation":"Deactivation",
+    "Deactivate_your_account":"Deactivate your account",
+    "Wornning!":"Wornning!",
+    "deactivation_msg":"After 30-day deactivation, your account'll be deleted.",
+    "Confirm":"Confirm",
+    "Privacy":"Privacy",
+    "Public":"Public",
+    "Anyone_can_see_your_posts.":"Anyone can see your posts.",
+    "Security_msg":"For Security Check Your Email"
+
+
+
+  },
+
+  "sidebar":{
+    "notifications":"Notifications",
+    "messages":"Messages",
+    "talents":"Talents",
+    "discover":"Discover",
+    "settings":"Settings",
+    "bookmarks":"Bookmarks",
+    "your_Interests":"Your Interests",
+    "click_to_remove":"Click to remove",
+    "add_Interests":"Add Interests",
+    "click_to_add":"Click to add"
 
   }
+  
 }

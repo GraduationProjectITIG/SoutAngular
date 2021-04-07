@@ -22,6 +22,18 @@ import { SettingComponent } from './components/setting/setting.component';
 import { UiSwitchModule } from 'ngx-toggle-switch';
 import { FormsModule } from '@angular/forms';
 
+// import ngx-translate and the http loader
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+
+
+
+// required for AOT compilation
+
+export function customHttpLoader(http: HttpClient) {
+  return new TranslateHttpLoader(http, "../../assets/i18n/", ".json");
+}
 @NgModule({
   declarations: [
     UsersComponent,
@@ -56,7 +68,19 @@ import { FormsModule } from '@angular/forms';
     AngularFirestoreModule,
     FormsModule,
     AngularFireStorageModule,
+    HttpClientModule,
+    TranslateModule.forChild({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: customHttpLoader,
+        deps: [HttpClient],
+      },
+      isolate: false
+    }),
 
-  ]
+  ],
+  providers: [
+    HttpClient,
+  ],
 })
 export class UsersModule { }

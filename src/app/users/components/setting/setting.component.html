@@ -5,12 +5,12 @@
         <nav id="sidebarMenu" class="col-2 col-md-3 middleSetting dark font" [ngStyle]="{'margin':'1.2%'}">
             <div class="position-sticky my-3 d-flex justify-content-center d-md-block ">
                 <ul class="nav flex-column">
-                    <h1 [ngStyle]="{'margin-left': '3%'}">Settings</h1>
+                    <h1 [ngStyle]="{'margin-left': '3%'}">{{'setting.Settings'|translate}}</h1>
                     <div class="dropdown-divider"></div>
                     <!-- <div>
                         <li class="nav-item dark" [ngClass]="settings.accountPrivacy ? 'active' : 'inactive'">
                             <a class="nav-link " (click)= "disableOthers('accountPrivacy')">
-                                <i class="fas fa-user-lock " [ngStyle]="{'color': settingsData.favColor}"></i><span class="d-md-inline-block font" > Account Privacy</span>
+                                <i class="fas fa-user-lock " [ngStyle]="{'color': settingsData.favColor}"></i><span class="d-md-inline-block font" >{{'setting.Account_Privacy'|translate}}</span>
                                 <svg viewBox="0 0 24 24" height="20" width="20" [ngStyle]="{'float':'right', 'margin-top':'5px'}" fill=gray><g><path d="M17.207 11.293l-7.5-7.5c-.39-.39-1.023-.39-1.414 0s-.39 1.023 0 1.414L15.086 12l-6.793 6.793c-.39.39-.39 1.023 0 1.414.195.195.45.293.707.293s.512-.098.707-.293l7.5-7.5c.39-.39.39-1.023 0-1.414z"></path></g></svg>
                             </a>
                         </li>
@@ -19,7 +19,7 @@
                     <div>
                         <li class="nav-item dark" id="theme" [ngClass]="settings.themes ? 'active' : 'inactive'">
                             <a class="nav-link" (click)= "disableOthers('themes')">
-                                <i class="fas fa-palette" [ngStyle]="{'color': settingsData.favColor}"></i><span class="d-flex d-md-inline-block font"> Theme</span>
+                                <i class="fas fa-palette" [ngStyle]="{'color': settingsData.favColor}"></i><span class="d-flex d-md-inline-block font">{{'setting.Theme'|translate}} </span>
                                 <svg viewBox="0 0 24 24" height="20" width="20" [ngStyle]="{'float':'right', 'margin-top':'5px'}" fill=gray><g><path d="M17.207 11.293l-7.5-7.5c-.39-.39-1.023-.39-1.414 0s-.39 1.023 0 1.414L15.086 12l-6.793 6.793c-.39.39-.39 1.023 0 1.414.195.195.45.293.707.293s.512-.098.707-.293l7.5-7.5c.39-.39.39-1.023 0-1.414z"></path></g></svg>
                             </a>
                         </li>
@@ -28,7 +28,7 @@
                     <div>
                         <li class="nav-item dark" id="changePassword" [ngClass]="settings.changePassword ? 'active' : 'inactive'">
                             <a class="nav-link side" (click)= "disableOthers('changePassword')">
-                                <i class="fas fa-key" [ngStyle]="{'color': settingsData.favColor}"></i><span class="d-none d-md-inline-block font"> Change Password</span>
+                                <i class="fas fa-key" [ngStyle]="{'color': settingsData.favColor}"></i><span class="d-none d-md-inline-block font"> {{'setting.Change_Password'|translate}}</span>
                                 <svg viewBox="0 0 24 24" height="20" width="20"  [ngStyle]="{'float':'right', 'margin-top':'5px'}" fill=gray><g><path d="M17.207 11.293l-7.5-7.5c-.39-.39-1.023-.39-1.414 0s-.39 1.023 0 1.414L15.086 12l-6.793 6.793c-.39.39-.39 1.023 0 1.414.195.195.45.293.707.293s.512-.098.707-.293l7.5-7.5c.39-.39.39-1.023 0-1.414z"></path></g></svg>
                             </a>
                         </li>
@@ -37,7 +37,7 @@
                     <!-- <div>
                         <li class="nav-item dark" id="notifications" [ngClass]="settings.notifications ? 'active' : 'inactive'">
                             <a class="nav-link side" (click)= "disableOthers('notifications')">
-                                <i class="fas fa-bell" [ngStyle]="{'color': settingsData.favColor}"></i><span class="d-none d-md-inline-block font"> Notifications</span>
+                                <i class="fas fa-bell" [ngStyle]="{'color': settingsData.favColor}"></i><span class="d-none d-md-inline-block font"> {{'setting.Notifications'|translate}}</span>
                                 <svg viewBox="0 0 24 24" height="20" width="20" [ngStyle]="{'float':'right', 'margin-top':'5px'}" fill=gray><g><path d="M17.207 11.293l-7.5-7.5c-.39-.39-1.023-.39-1.414 0s-.39 1.023 0 1.414L15.086 12l-6.793 6.793c-.39.39-.39 1.023 0 1.414.195.195.45.293.707.293s.512-.098.707-.293l7.5-7.5c.39-.39.39-1.023 0-1.414z"></path></g></svg>
                             </a>
                         </li>
@@ -46,7 +46,7 @@
                     <div>
                         <li class="nav-item dark" id="manageAccount" [ngClass]="settings.manageAccount ? 'active' : 'inactive'">
                             <a class="nav-link side" (click)= "disableOthers('manageAccount')">
-                                <i class="fas fa-shield-alt" [ngStyle]="{'color': settingsData.favColor}"></i><span class="d-none d-md-inline-block font"> Manage Account</span>
+                                <i class="fas fa-shield-alt" [ngStyle]="{'color': settingsData.favColor}"></i><span class="d-none d-md-inline-block font">{{'setting.Manage_Account'|translate}} </span>
                                 <svg viewBox="0 0 24 24" height="20" width="20" [ngStyle]="{'float':'right', 'margin-top':'5px'}" fill=gray><g><path d="M17.207 11.293l-7.5-7.5c-.39-.39-1.023-.39-1.414 0s-.39 1.023 0 1.414L15.086 12l-6.793 6.793c-.39.39-.39 1.023 0 1.414.195.195.45.293.707.293s.512-.098.707-.293l7.5-7.5c.39-.39.39-1.023 0-1.414z"></path></g></svg>
                             </a>
                         </li>
@@ -56,11 +56,11 @@
         </nav>
         <div id="sidebarMenu" class="col-8 col-md-5 col-sm-8 dark font" [ngStyle]="{'margin': '1.2%'}">
             <div  *ngIf="settings.themes" id="themeSetting">
-                <h3 [ngStyle]="{'margin-top': '3%', 'text-align':'center'}">Themes</h3>
+                <h3 [ngStyle]="{'margin-top': '3%', 'text-align':'center'}">{{'setting.Themes'|translate}}</h3>
                 <div class="dropdown-divider"></div>
                 <div>
                     <div [ngStyle]="{'margin-top':'2rem', 'margin-left':'1rem'}">
-                        <p class="h2 font"> Icons Color <button [ngStyle]="{'background-color': color}" (click)="color='#ee4c22'" class="btn btn-secondary reset">Reset</button></p>
+                        <p class="h2 font"> {{'setting.Icons_Color'|translate}} <button [ngStyle]="{'background-color': color}" (click)="color='#ee4c22'" class="btn btn-secondary reset">{{'setting.Reset'|translate}}</button></p>
                     </div>
                     <div class="theme theme-0" [ngStyle]="{'margin-left': '1rem'}" (click)="color='#ee4c22'">
                     </div>
@@ -87,37 +87,40 @@
 
                 <div>
                     <div [ngStyle]="{'margin-top':'2rem','margin-bottom':'2rem', 'margin-left': '1rem'}">
-                        <p class="h2 font"> Enable Dark Mode </p>
+                        <p class="h2 font"> {{'setting.Enable_Dark_Mode'|translate}} </p>
                         <ui-switch (change)="onDarkEv($event)" color='grey' [checked]="checked"></ui-switch>
                         
                     </div>
                 </div>
                 <div>
-                    <button class="btn btn-secondary btn-lg btn-block" type="button" (click)="saveThemes()">Save</button>
+                    <button class="btn btn-secondary btn-lg btn-block" type="button" (click)="saveThemes()"> {{'setting.Save'|translate}}</button>
                 </div>
             </div>
 
             <div *ngIf="settings.changePassword" id="changePassSetting" [ngStyle]="{'padding-left':'1rem'}">
-                <h3 [ngStyle]="{'margin-top': '3%', 'text-align':'center'}">Password</h3>
+                <h3 [ngStyle]="{'margin-top': '3%', 'text-align':'center'}"> {{'setting.Password'|translate}}</h3>
 
                 <div class="dropdown-divider"></div>
 
                 <form #frm="ngForm" name="sett" (ngSubmit)="changePassword()">
 
                     <div class="form-group">
-                        <label for="newPass" class="h6 darkFont" >Old Password</label>
-                        <input type="password" [(ngModel)]="settingsData.oldPassword" required class="form-control" placeholder="Old Password" name="oldPass">
+                        <label for="newPass" class="h6 darkFont" > {{'setting.Old_Password'|translate}}</label>
+                        <input type="password" [(ngModel)]="settingsData.oldPassword" required class="form-control" [placeholder]=" 'setting.Old_Password'|translate" name="oldPass">
                         <!-- <div [hidden]="passConfirm.valid || passConfirm.untouched" id="helpId" class="alert alert-danger">Not Match</div> -->
 
                     </div>
                     
-                    <button type="submit" placement="bottom" class="btn btn-outline-secondary" ngbPopover="For Security Check Your Email" triggers="mouseenter:mouseleave" popoverTitle="Email Security">Send Code</button>
+                    <button type="submit" placement="bottom" class="btn btn-outline-secondary" ngbPopover="'setting.Security_msg'|translate" triggers="mouseenter:mouseleave" popoverTitle="'setting.Email_Security'|translate">{{'setting.Send_Code'|translate}}</button>
                 </form>
             </div>
             <div  *ngIf="settings.manageAccount" id="deactivateAccSetting" [ngStyle]="{'padding-left':'1rem'}">
-                <h3 [ngStyle]="{'margin-top': '3%', 'text-align':'center'}">Deactivation</h3>
+                <h3 [ngStyle]="{'margin-top': '3%', 'text-align':'center'}" >{{'setting.Deactivation'|translate}}</h3>
+
+                 
 
                 <div class="dropdown-divider"></div>
+
                 <div >
                     <select class="custom-select" (change)="changeLang($event.target.value)" >
                         <option value="en" [selected]="lang == 'en'" >English</option>
@@ -125,34 +128,36 @@
                     </select>
                     
                 </div>
+
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" value="" (click)="deactivate()">
                     <label class="form-check-label h6 darkFont" for="deAct ">
-                      Deactivate your account
+                        {{'setting.Deactivate_your_account'|translate}}
                     </label>
                 </div>
                 <div class="alert alert-warning alert-dismissible"  *ngIf="alertDeact" role="alert">
                     <button type="button" onclick="unactivate()" class="close" data-dismiss="alert" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
-                    </button> <strong>Wornning!</strong> After 30-day deactivation, your account'll be deleted.
-                    <button type="button" class="btn btn-light btn-sm" (click)="confirmDeactivate()">Confirm</button>
+                    </button> <strong>{{'setting.Wornning!'|translate}}</strong>
+                    {{'setting.deactivation_msg'|translate}}
+                    <button type="button" class="btn btn-light btn-sm" (click)="confirmDeactivate()"> {{'setting.Confirm'|translate}} </button>
                 </div>
             </div>
             <!-- <div  *ngIf="settings.accountPrivacy" id="accPrivacySetting" [ngStyle]=" {'padding-left':'1rem'}">
                 <h3 [ngStyle]="{'margin-top': '3%', 'text-align':'center'}">Privacy</h3>
-
+            
                 <div class="dropdown-divider"></div>
                 <div class="form-check">
                     <input class="form-check-input" type="checkbox" value="" (click)="privacy(this.checked)" >
                     <label class="form-check-label h6 darkFont" for="deAct ">
-                      Public
+                        {{'setting.Public'|translate}} 
                     </label>
                 </div>
                 <div class="alert alert-warning alert-dismissible fade" role="alert">
                     <button type="button"  class="close" data-dismiss="alert" aria-label="Close">
                       <span aria-hidden="true">&times;</span>
-                    </button> <strong>Wornning!</strong> Anyone can see your posts.
-                    <button type="button" class="btn btn-light btn-sm" (click)="confirmPublic()">Confirm</button>
+                    </button> <strong> {{'setting.Wornning!'|translate}}</strong>  {{'setting.Anyone_can_see_your_posts'|translate}}
+                    <button type="button" class="btn btn-light btn-sm" (click)="confirmPublic()"> {{'setting.Confirm'|translate}}</button>
                 </div>
             </div> -->
         </div>

@@ -15,7 +15,7 @@ import { TooltipModule } from 'ngx-bootstrap/tooltip';
 import { ModalModule, BsModalRef } from 'ngx-bootstrap/modal';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AudioRecordingService } from './services/audio-recording.service';
-import { NgxElectronModule } from 'ngx-electron';
+// import { NgxElectronModule } from 'ngx-electron';
 
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -44,7 +44,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   imports: [
     // MDBBootstrapModule.forRoot(),
     HttpClientModule,
-    NgxElectronModule,
+    // NgxElectronModule,
     UiSwitchModule,
     BrowserModule,
     AppRoutingModule,
@@ -63,7 +63,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     ModalModule,
     NgxLoadingModule,
     BrowserAnimationsModule,
-    HttpClientModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -74,8 +73,9 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
   providers: [
     UserInfoService,
-    HttpClient
-    , BsModalRef,AudioRecordingService
+    HttpClient,
+     BsModalRef,
+    AudioRecordingService
   ],
   bootstrap: [AppComponent]
 })

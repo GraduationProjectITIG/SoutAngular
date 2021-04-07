@@ -7,7 +7,8 @@
             <div class="card mb-sm-3 mb-md-0 contacts_card " [ngClass]="(user.favMode=='dark')?'darkCard':'bg-dark'">
                 <div class="  card-header">
                     <div class="input-group">
-                        <input type="text" placeholder="Not yet..." name="" class="form-control search">
+
+                        <input type="text" [placeholder]="'chat.Search'|translate" name="" class="form-control search">
                         <div class="input-group-prepend">
                             <span class="input-group-text search_btn"><i class="fas fa-search"></i></span>
                         </div>
@@ -48,8 +49,10 @@
                             <span class="online_icon"></span>
                         </div>
                         <div class="user_info">
-                            <span>Chat with {{persons[0].firstName}}</span>
-                            <p>{{chats[0].messages.length}} Messages</p>
+                            <span>{{'chat.Chat_with'|translate}}
+                                 {{persons[0].firstName}}</span>
+                            <p>{{chats[0].messages.length}}
+                                {{'chat.Messages'|translate}} </p>
                         </div>
                         <!-- <div class="video_cam">
                             <span><i class="fas fa-video"></i></span>
@@ -59,8 +62,9 @@
                     <span id="action_menu_btn" (click)="toggleActionMenue()"><i class="fas fa-ellipsis-v"></i></span>
                     <div  [class.action_menu]="classApplied">
                         <ul>
-                            <li style="color:white;" [routerLink]="'/users/profile/'+persons[0].id"><i class="fas fa-user-circle"></i> View profile</li>
-                            <!-- <li style="color:white;"><i class="fas fa-ban"></i> Block</li> -->
+
+                            <li style="color:white;" [routerLink]="'/users/profile/'+persons[0].id"><i class="fas fa-user-circle"></i>{{'chat.View_profile'|translate}} </li>
+                            <li style="color:white;"><i class="fas fa-ban"></i>  {{'chat.Block'|translate}}</li>
                         </ul>
                     </div>
                 </div>
@@ -110,7 +114,8 @@
                         <!-- <div class="input-group-append">
                             <span class="input-group-text attach_btn"><i class="fas fa-paperclip"></i></span>
                         </div> -->
-                        <textarea name="" class="form-control type_msg" [(ngModel)]="newMsg" placeholder="Type your message..."></textarea>
+
+                        <textarea name="" class="form-control type_msg" [(ngModel)]="newMsg" [placeholder]="'chat.Type_your_message'|translate"></textarea>
                         <div class="input-group-append" (click)="addMsg()">
                             <span class="input-group-text send_btn"><i class="fas fa-location-arrow"></i></span>
                         </div>

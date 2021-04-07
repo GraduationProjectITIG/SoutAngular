@@ -4,8 +4,8 @@
         <app-sidebar></app-sidebar>
         <div class="col-9 col-md-8" style="margin-top:1.2%">
             <div class="btn-group btn-group-lg" role="group" aria-label="bookmarksType">
-                <button type="button" class="btn btn-dark">Later</button>
-                <!-- <button type="button" class="btn btn-secondary"><i class="fas fa-plus-circle"></i></button> -->
+
+                <button type="button" class="btn btn-dark">{{'bookmark.Later'|translate}}</button>
             </div>
 
             <!-- <button type="button" class="btn btn-primary" (click)="openModal(template)">Create template modal</button> -->
@@ -32,7 +32,9 @@
                             <small style="color:gray;">Bookmark • Section: Later</small><br>
                             <small style="color:gray;">
                                 
-                                <img class="smallPic" [src]="bookmark.data.owner.picURL">  Saved from {{bookmark.data.owner.name}}</small>
+                                <img class="smallPic" [src]="bookmark.data.owner.picURL"> 
+                                {{'bookmark.Saved_from'|translate}}
+                                  {{bookmark.data.owner.name}}</small>
                         </div>
 
 
@@ -65,11 +67,16 @@
                                             </div>
                                             <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
                                               <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                                              <span class="sr-only">Previous</span>
+                                              <span class="sr-only">
+                                                {{'bookmark.Previous'|translate}}
+                                                </span>
                                             </a>
                                             <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
                                               <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                                              <span class="sr-only">Next</span>
+                                              <span class="sr-only">
+                                                {{'bookmark.Next'|translate}}
+
+                                              </span>
                                             </a>
                                           </div> -->
                                     </div>   
@@ -107,19 +114,22 @@
                                     <div id="like" (click)="addLike(bookmark.data)">
                                         <i class="far fa-thumbs-up" id="likeIcon"></i>
                                         <span id="likeCont">
-                                            Like <span class="badge badge-pill badge-light">{{LikesList[i].length}}</span>
+                                            {{'bookmark.Like'|translate}}
+                                             <span class="badge badge-pill badge-light">{{LikesList[i].length}}</span>
                                         </span>
                                     </div>
                                     <div id="comment">
                                         <i class="fas fa-microphone-alt"></i>
                                         <span id="commentCont">
-                                            Voice
+                                            {{'bookmark.Voice'|translate}}
+                                            
                                         </span>
                                     </div>
                                     <div id="comment" (click)="addComment(bookmark.data,i)">
                                         <i class="far fa-comment-alt" id="commentIcon"></i>
                                         <span id="commentCont">
-                                            Comment <span class="badge badge-pill badge-light">{{commentsList[i].length}}</span>
+                                            {{'bookmark.Comment'|translate}}
+                                             <span class="badge badge-pill badge-light">{{commentsList[i].length}}</span>
                                         </span>
                                     </div>
                                 </div>
@@ -129,7 +139,7 @@
                                     <div class="firstRow">
                                         <img [src]="user.picURL" [routerLink]="'/users/profile/'+bookmark.data.owner.id" routerLinkActive="active"
                                             style="cursor: pointer; margin-top: 7px;">
-                                        <input [(ngModel)]="postcomfields[i]" style="margin-bottom: 10px;" type="text" placeholder="Write a comment..."
+                                        <input [(ngModel)]="postcomfields[i]" style="margin-bottom: 10px;" type="text" [placeholder]="'bookmark.Write_a_comment'|translate"
                                             id="cmntInput" />
                                     </div>
                 

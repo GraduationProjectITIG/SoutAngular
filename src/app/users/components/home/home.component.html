@@ -8,25 +8,39 @@
                 <div id="writePst">
                     <div class="firstRow">
                         <img [src]="user.picURL">
-                        <input type="text" [(ngModel)]="postDesc" [placeholder]="greating" />
-                        <span *ngIf="post.audio">
+
+                        <input type="text" [(ngModel)]="postDesc" [placeholder]="'home.greating'|translate" />
+                        <!-- <span *ngIf="post.audio">
                             <div class="container-audio">
                                 <audio controls loop autoplay>
                                     <source [src]="post.audio" type="audio/ogg">
                                     Your browser dose not Support the audio Tag
                                 </audio>
                             </div>
-                        </span>
-                        <div class="container ny-3" *ngFor="let url of urlsVideo">
-                            
+                        </span> -->
+<!-- Audio recorder html -->
+                            <div class="mx-1 text-center" style="display: inline-block;background-color: transparent;">
+                            <!-- <button *ngIf="!isRecording" style="display: inline-block;background-color: transparent;border: none;" (click)="startRecording()"><i [ngStyle]="{'color': user.favColor}" class="fas fa-microphone-alt"></i></button>
+                            <button *ngIf="isRecording" style="display: inline-block;background-color: transparent;border: none;" (click)="stopRecording()"><i Style="color: red" class="fas fa-microphone-alt"></i></button> -->
+                         </div>
+                        <div id="song" *ngIf='fileUrl'>
+                            <div class="container-audio">
+                                <audio controls loop>
+                                    <source [src]="fileUrl" type="audio/ogg">
+                                </audio>
+                            </div>
+                        </div>
+                        <div class="container ny-3" >
+<!--                             
                             <video controls="" *ngIf="url"> 
                                 <source [src]="sanitize(url)" type="video/mp4">
-                            </video>
+                            </video> -->
                         </div>
                     </div>
                     <hr>
                     <div class="secondRow">
                         <div class="live">
+
                             <!-- Audio recorder html -->
                             <div style="display: inline-block;background-color: transparent;">
                                 
@@ -60,7 +74,7 @@
                                     <ul class="dropdown-menu" role="menu">
                                         <li role="presentation" style="padding-left:9px;padding-right: 9px;">
                                             <a class="custom-file" role="menuitem" tabindex="-1">
-                                                <input type="file" (change)="uploadFile2($event,'image')"
+                                                <input type="file" (change)="uploadFile($event,'image')"
                                                     class="custom-file-input" style="width:100%;" />
                                                 <label class="custom-file-label" for="validatedCustomFile">
                                                     <i class="fas fa-image" style="font-size: 25px"></i></label>
@@ -69,7 +83,7 @@
                                         <hr>
                                         <li role="presentation" style="padding-left:9px;padding-right: 9px;">
                                             <a class="custom-file" role="menuitem" tabindex="-1">
-                                                <input type="file" (change)="uploadFile2($event,'audio')"
+                                                <input type="file" (change)="uploadFile($event,'audio')"
                                                     class="custom-file-input" style="width:100%;" />
                                                 <label class="custom-file-label" for="validatedCustomFile">
                                                     <i class="fas fa-microphone" style="font-size: 25px"></i></label>
@@ -78,7 +92,7 @@
                                         <hr>
                                         <li role="presentation" style="padding-left:9px;padding-right: 9px;">
                                             <a class="custom-file" role="menuitem" tabindex="-1">
-                                                <input type="file" (change)="uploadFile2($event,'video')"
+                                                <input type="file" (change)="uploadFile($event,'video')"
                                                     class="custom-file-input" style="width:100%;" />
                                                 <label class="custom-file-label" for="validatedCustomFile">
                                                     <i class="fas fa-video" style="font-size: 25px"></i></label>
@@ -87,10 +101,11 @@
                                     </ul>
                                 </div>
                             </div>
-                           
-                            <button class="btn" id="postButt" (click)="addPost(postDesc,urls,urlsVideo);postDesc=''"
-                                [ngStyle]="{'background-color': user.favColor,'float':'right','margin-right':'30px','color':'white'}">Post</button>
+                            <input [ngStyle]="{'background-color': user.favColor,'float':'right','margin-right':'50px'}" (click)="addPost(postDesc)" class="postButt col-12" type="button" [value]="'home.post'|translate">
+                            <!-- <button class="btn" id="postButt" (click)="addPost(postDesc);postDesc=''"
+                                [ngStyle]="{'background-color': user.favColor,'float':'right','margin-right':'30px','color':'white'}">Post</button> -->
     <!--  -->
+
                         </div>
     
                     </div>
@@ -98,7 +113,7 @@
 
 
                 <div class="Post" id="post1"  *ngFor="let post of postList;let i=index">
-                    <div class="dropdown " style="float: right">
+                    <!-- <div class="dropdown " style="float: right">
                         <button class="btn dropdown-toggle points" id="menu1" type="button"
                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
                                 class="fas fa-ellipsis-h"  [ngStyle]="{'color': this.user.favColor}"></i>
@@ -124,58 +139,88 @@
                     <div class="poster">
                         <img [src]="post.owner.picURL" [routerLink]="'/users/profile/'+post.owner.id">
                         <div id="posterName" [routerLink]="'/users/profile/'+post.owner.id">{{post.owner.name}}</div>
+                        <div id="time">{{post.date.seconds * 1000 | date:'dd-MM-yyyy HH-mm'}} <i class="fas fa-globe-africa"></i></div> -->
+                    <div class="dropdown " style="float: right">
+                        <button class="btn dropdown-toggle points" id="menu1" type="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i
+                                class="fas fa-ellipsis-h"  [ngStyle]="{'color': this.user.favColor}"></i>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            <li role="presentation" style="padding-left:9px;">
+                                <button (click)="bookmarkpost(post)" style="color: black;background-color: transparent;border: none;cursor: pointer;">
+                                    <i class="fas fa-bookmark"
+
+                                    [ngStyle]="{'color': user.favColor}"
+                                        style="font-size: 16px;margin-right: 5px;"></i>
+                                    {{ 'home.bookmark_post'|translate}}</button>
+
+                            </li>
+                            <li *ngIf="post.owner.id == user.id" role="presentation" style="padding-left:9px;">
+                                <button (click)="deletepost(post)" style="color: black;background-color: transparent;border: none;cursor: pointer;">
+                                    <i class="fas fa-recycle"
+                                    [ngStyle]="{'color': user.favColor}"
+                                        style="font-size: 16px;margin-right: 5px;"></i>
+                                    {{ 'home.Delete_post'|translate}}</button>
+
+                            </li>
+
+                        </ul>
+                    </div>
+                    <div class="poster">
+                        <img [src]="post.owner.picURL" [routerLink]="'/users/profile/'+post.owner.id">
+                        <div id="posterName" [routerLink]="'/users/profile/'+post.owner.id">{{post.owner.name}}</div>
                         <div id="time">{{post.date.seconds * 1000 | date:'dd-MM-yyyy HH-mm'}} <i class="fas fa-globe-africa"></i></div>
                     </div>
 
                     <span style="padding: 2%;" *ngIf="post.description">{{post.description}}</span>
                     <!-- <span style="padding: 2%;" *ngIf="post.image.length>0"><img *ngFor="let item of post.image;" [src]="item." class="img-fluid ${3|rounded-top,rounded-right,rounded-bottom,rounded-left,rounded-circle,|}" alt=""></span> -->
                     <div class="mx-auto col-6">
-                        <img [src]="post.image" *ngIf="post.image!=false" style="height: 100%; width: 100%; object-fit: contain" >
+                        <img [src]="post.image" *ngIf="post.image" style="height: 100%; width: 100%; object-fit: contain" >
                     </div>
                     <span *ngIf="post.audio">
                         <div class="container-audio">
                             <audio controls  >
                                 <source [src]="sanitize(post.audio)" type="audio/ogg">
-                                Your browser dose not Support the audio Tag
+                                    {{ 'home.audio_tag_msg' | translate }}
                             </audio>
                         </div>
                     </span>
 
                     <span *ngIf="post.video">
                         <div class="col-6 ny-3 mx-auto" >
-                                <video style="height: 100%; width: 100%; object-fit: contain" controls> 
-                                    <source [src]="sanitize(post.video)" type="video/mp4">
-                                </video>
-                            </div>
+                            <video style="height: 100%; width: 100%; object-fit: contain" controls> 
+                                <source [src]="sanitize(post.video)" type="video/mp4">
+                            </video>
+                        </div>
                     </span>
-          
+                    
                     <hr style="margin-top: 15px;">
                     <div class="lastRowPost">
                         <div id="like" (click)="addLike(post)">
                             <i class="far fa-thumbs-up" id="likeIcon"></i>
                             <span id="likeCont">
-                                Like <span class="badge badge-pill badge-light">{{LikesList[i].length}}</span>
+                                {{ 'home.Like'|translate}} <span class="badge badge-pill badge-light">{{LikesList[i].length}}</span>
                             </span>
-                        </div> 
+                        </div>
                         <div id="comment" >
                             <i class="fas fa-microphone-alt"></i>
                             <span id="commentCont">
-                                Voice
+                                {{ 'home.Voice'|translate}}  
                             </span>
                         </div>
                         <div id="comment" (click)="addComment(post,i)">
                             <i class="far fa-comment-alt" id="commentIcon"></i>
                             <span id="commentCont">
-                                Comment <span class="badge badge-pill badge-light">{{commentsList[i].length}}</span>
+                                {{ 'home.Comment'|translate}}     <span class="badge badge-pill badge-light">{{commentsList[i].length}}</span>
                             </span>
                         </div>
-                    </div>
 
+                    </div>
                     <div id="writecomnt">
                         <hr style="margin-top: 55px;margin-bottom: 10px">
                         <div class="firstRow">
                             <img [src]="user.picURL">
-                            <input [(ngModel)]="postcomfields[i]" type="text" placeholder="Write a comment..." class="cmntInput" />
+                            <input [(ngModel)]="postcomfields[i]" type="text" [placeholder]="'home.Write_a_comment'|translate" class="cmntInput" />
                         </div>
 
                     </div>
